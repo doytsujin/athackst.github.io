@@ -1,0 +1,289 @@
+.page {
+
+  margin-right: auto;
+
+  margin-left: auto;
+
+  width: 1020px;
+
+}
+
+h1 {
+
+  font-family: 'Oswald',sans-serif;
+
+  font-weight: 300;
+
+  font-size: 70px;
+
+  color: #7a7a7a;
+
+  text-decoration: none;
+
+  letter-spacing: 0px;
+
+  line-height: 1.25em;
+
+  text-transform: uppercase;
+
+  text-align: center;
+
+  height: 80px;
+
+}
+
+h2 {
+
+  font-family: 'Oswald',sans-serif;
+
+  font-weight: 300;
+
+  font-size: 50px;
+
+  color: #428896;
+
+  text-decoration: none;
+
+  letter-spacing: 0px;
+
+  line-height: 1.5em;
+
+  height: 50px;
+
+}
+
+h3 {
+
+  font-family: 'Raleway';
+
+  font-weight: 200;
+
+  font-size: 40px;
+
+  color: #7a7a7a;
+
+  text-decoration: none;
+
+  letter-spacing: 1px;
+
+  line-height: 1em;
+
+  text-transform: none;
+
+}
+h3 a {
+
+  font-family: 'Raleway';
+
+  font-weight: 200;
+
+  font-size: 40px;
+
+  color: #7a7a7a;
+
+  text-decoration: none;
+
+  letter-spacing: 1px;
+
+  line-height: 1em;
+
+  text-transform: none;
+
+}
+
+h3 a:hover {
+
+  font-family: 'Raleway';
+
+  font-weight: 200;
+
+  font-size: 50px;
+
+  color: #428896;
+
+  text-decoration: none;
+
+  letter-spacing: 1px;
+
+  line-height: 1em;
+
+  text-transform: none;
+
+}
+h4 {
+
+  font-family: 'Oswald';
+
+  font-size: 24px;
+
+  color: #333333;
+
+  text-decoration: none;
+
+  letter-spacing: 1px;
+
+  line-height: 1em;
+
+  text-transform: uppercase;
+
+}
+
+p {
+
+  font-family: 'Actor';
+
+  font-size: 16px;
+
+  color: #797979;
+
+  line-height: 1.5em;
+
+  text-transform: none;
+
+}
+
+.nav-bar {
+
+  margin: 30px auto;
+
+  background-color: #ebebeb;
+
+}
+
+.nav-link {
+
+  margin: 30pt auto;
+
+  font-size: 18px;
+
+  text-decoration: none;
+
+  letter-spacing: 1px;
+
+  line-height: 1.5em;
+
+  font-family: 'Oswald',sans-serif;
+
+  font-weight: 400;
+
+  color: #666666;
+
+  text-align: center;
+
+  text-transform: uppercase;
+
+}
+
+ul.nav-link li {
+
+  margin: 0 50px 0 0;
+
+  display: inline;
+
+  list-style-type: none;
+
+}
+
+ul.nav-link li a {
+
+  color: #666666;
+
+  text-decoration: none;
+
+}
+
+ul.nav-link li.selected a {
+
+  color: #428896;
+
+  text-decoration: none;
+
+}
+
+ul.nav-link a:hover, ul.nav-link li a:hover {
+
+  color: #428896;
+
+}
+
+.footer {
+
+  margin: 30pt auto;
+
+  background-color: black;
+
+  padding-top: 10pt;
+
+  padding-bottom: 10pt;
+
+  text-align: center;
+
+}
+
+.footer-text {
+
+  padding: 40px 60px;
+
+  font-family: 'Lato';
+
+  font-size: 16px;
+
+  color: #9a9a9a;
+
+  line-height: 1.5em;
+
+  text-transform: lowercase;
+
+}
+
+.footer-text a {
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  text-transform: lowercase;
+
+}
+
+.footer-text a:hover {
+
+  color: #ffffff;
+
+  text-decoration: underline;
+
+  text-transform: lowercase;
+
+}
+
+.body-text {
+
+  padding-right: 10pt;
+
+  padding-left: 10pt;
+
+}
+.tumblr_post {
+border: 2px dotted #cccccc;
+border-radius: 25px;
+padding: 30px;
+list-style-type: none;
+margin-top: 30px;
+margin-bottom: 30px;
+}
+.tumblr_title {
+font-family: 'Oswald';
+font-size: 24px;
+color: #333333;
+text-decoration: none;
+letter-spacing: 1px;
+line-height: 1.5em;
+text-transform: uppercase;
+}
+.tumblr_body {
+font-family: 'Actor';
+font-size: 16px;
+color: #797979;
+line-height: 1.5em;
+text-transform: none;
+}
