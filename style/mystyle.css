@@ -1,4 +1,4 @@
-.page {
+﻿.page {
 
   margin-right: auto;
 
@@ -263,14 +263,29 @@ ul.nav-link a:hover, ul.nav-link li a:hover {
   padding-left: 10pt;
 
 }
-.tumblr_post {
-border: 2px dotted #cccccc;
-border-radius: 25px;
-padding: 30px;
-list-style-type: none;
-margin-top: 30px;
-margin-bottom: 30px;
+
+.tumblr {
+	padding: 30px;
+	margin-left: auto;
+	margin-right: auto;
 }
+
+ol.tumblr_posts {
+  list-style-type: none;
+  padding-left: 0;
+  }
+
+.tumblr_post {
+	border: 2px dotted #cccccc;
+	border-radius: 25px;
+	padding: 30px;
+	list-style-type: none;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .tumblr_title {
 font-family: 'Oswald';
 font-size: 24px;
