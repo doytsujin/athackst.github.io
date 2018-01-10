@@ -3,7 +3,7 @@ layout: default
 title: Experience
 ---
 <section class="content">
-  <div style="text-align: center;"></div>
+  <div style="text-align: center;">
   <table style="padding: 0px; margin-top: 0px; margin-bottom: 0px; border-collapse: collapse; width: 100%;" class="layout_2-over-1">
     <tbody>
       <tr id="layout_row1">
@@ -26,7 +26,35 @@ title: Experience
     </tbody>
   </table>
   </div>
-  <div class="tumblr">
-  <script type="text/javascript" src="http://lyonthackston.tumblr.com/js"></script>
+  <div>
+    <ul class="entries">
+      {% for post in site.posts %}
+
+      <li>
+        <div class="entry-content">
+          {% if post.layout=='link_entry' %}
+          <a href="{{ post.link }}" target="_blank">
+            <h3> {{ post.title }} </h3>
+            <img src="{{ post.image }}" />
+          </a>
+          {{ post.content }}
+          {% elsif post.layout=='image_entry' %}
+          <img src="{{ post.image }}" />
+          <h4>{{ post.title }}</h4>
+          {{ post.content }}
+          {% elsif post.layout=='text_entry' %}
+          <h3>{{ post.title }}</h3>
+          {{ post.content }}
+          {% elsif post.layout=='video_entry' %}
+          <h4>{{ post.title }}</h4>
+          <iframe width="600" height="340" src="{{ post.video }}" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+          {% else %}
+          {{ post.content }}
+          {% endif %}
+        </div>
+      </li>
+
+      {% endfor %}
+    </ul>
   </div>
 </section>
