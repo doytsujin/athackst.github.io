@@ -321,6 +321,8 @@ blockquote.link_og_blockquote {
 
 .about {
   min-height: 350px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .about img {
