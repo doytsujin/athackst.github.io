@@ -1,6 +1,7 @@
 ﻿.page {
   margin-right: auto;
   margin-left: auto;
+  min-width: 910px;
 }
 
 h1 {
@@ -237,6 +238,7 @@ footer .footer-copyright {
   margin: auto;
   display: block;
   padding-bottom: 50px;
+  max-width: 700px;
 }
 
 .entry-content img {
