@@ -5,10 +5,12 @@
 
 <body class="page">
 
+  {% include nav-bar.html %}
+
   {% include header.html %}
 
- 	<div class="body-text">
- 
+  <div>
+
     {{ content }}
 
   </div>
@@ -16,4 +18,9 @@
   {% include footer.html %}
 
 </body>
+
+{% if jekyll.environment == 'production' %}
+{% include analytics.html %}
+{% endif %}
+
 </html>

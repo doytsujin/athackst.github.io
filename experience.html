@@ -3,55 +3,40 @@ layout: default
 title: Experience
 ---
 <section class="content">
-  <div style="text-align: center;">
-  <table style="padding: 0px; margin-top: 0px; margin-bottom: 0px; border-collapse: collapse; width: 100%;" class="layout_2-over-1">
-    <tbody>
-      <tr id="layout_row1">
-        <td id="sys_region_2" class="zone_left" style="margin: 0px; padding: 5px; width: 50%; vertical-align: top; line-height: normal; min-width: 100px; text-align: center; height: 150px;">
-          <h3>
-            <a href="http://www.linkedin.com/pub/allison-thackston/3/92b/9a6" target="_blank">
-              <img src="https://static.licdn.com/scds/common/u/images/logos/favicons/v1/favicon.ico" alt="View Allison Thackston's LinkedIn profile" height="30" width="30"/>LinkedIn
-            </a>
-          </h3>
-        </td>
-        <td>
-          <div style="font-size: 0px; width: 5px;"></div>
-        </td>
-        <td id="sys_region_3" style="margin: 0px; padding: 5px; vertical-align: top; line-height: normal; min-width: 100px; text-align: center;" class="zone_right" width="50%">
-          <h3>
-            <a href="resources/ALT_Resume_11-01-2018.pdf" target="_blank">Resume</a>
-          </h3>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
-  <div>
-    <ul class="entries">
+  <div class="body-text">
+    <ul class="experience">
       {% for post in site.posts %}
 
       <li>
         <div class="entry-content">
+          <h5 style="text-align: center;">{{ post.date | date: '%B %d, %Y' }}</h5>
           {% if post.layout=='link_entry' %}
           <a href="{{ post.link }}" target="_blank">
             <h3> {{ post.title }} </h3>
             <img src="{{ post.image }}" />
           </a>
+
           {{ post.content }}
           {% elsif post.layout=='image_entry' %}
           <img src="{{ post.image }}" />
-          <h4>{{ post.title }}</h4>
+          <h3>{{ post.title }}</h3>
           {{ post.content }}
           {% elsif post.layout=='text_entry' %}
           <h3>{{ post.title }}</h3>
           {{ post.content }}
           {% elsif post.layout=='video_entry' %}
-          <h4>{{ post.title }}</h4>
-          <iframe width="600" height="340" src="{{ post.video }}" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+          <h3>{{ post.title }}</h3>
+          <div class="video-wrapper">
+            <iframe width="600" height="340" src="{{ post.video }}" frameborder="0" gesture="media" allow="encrypted-media"
+              allowfullscreen></iframe>
+          </div>
           {% else %}
           {{ post.content }}
           {% endif %}
         </div>
+        {% unless forloop.last %}
+        <hr class="entry-divider">
+        {% endunless %}
       </li>
 
       {% endfor %}

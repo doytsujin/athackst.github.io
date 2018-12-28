@@ -3,40 +3,18 @@ layout: default
 title: Contact
 ---
 <section class="content">
-  <div style="text-align: center;">
-    <h3>
+  <div class="body-text">
+    <h3 style="text-align:center">
       Let me help you build your robot
     </h3>
-  </div>
-  <div class="body-text">
-    <table style="padding: 0px; margin-top: 0px; margin-bottom: 0px; border-collapse: collapse; width: 100%;" class="layout_2-over-1">
-      <tbody>
-        <tr id="layout_row1">
-          <td id="sys_region_2" class="zone_left" style="margin: 0px; padding: 5px; width: 50%; vertical-align: top; line-height: normal; min-width: 100px; text-align: center; height: 150px;">
-            <div style="text-align: right;">
-              <span style="font-family: 'Raleway';">
-                <img style="width: 271px; height: 145px;" alt="Allison Lyon Thackston Logo" src="images/AllisonLyonThackstonLogoS2.png" />
-                <br/>
-                <img style="width: 176px; height: 21px;" alt="email" src="images/email.jpg" />
-                <br/>
-                <img style="width: 87px; height: 19px;" alt="phone" src="images/phone.jpg" />
-                <br/>
+    <div class="entry-content">
+      <form method="POST" action="https://formspree.io/allison+website@lyonthackston.com">
+        <input type="email" name="email" placeholder="Your email" />
 
-              </span>
-            </div>
-          </td>
-          <td>
-            <div style="font-size: 0px; width: 15px;"></div>
-          </td>
-          <td id="sys_region_3" style="margin: 0px; padding: 5px; vertical-align: top; line-height: normal; min-width: 100px; text-align: center;" class="zone_right" width="50%" height="450">
-            <!-- www.123contactform.com script begins here -->
-            <iframe allowtransparency="true" style="min-height: 300px; height: inherit; overflow: auto;" id="contactform123" name="contactform123" marginwidth="0" marginheight="0" src="http://www.123contactform.com/my-contact-form-lyonthackston-1120440.html" frameborder="0" width="100%">
-              &lt;p&gt;Your browser does not support iframes. The contact form cannot be displayed. Please use another contact method (phone, fax etc)&lt;/p&gt;
-            </iframe>
-            <!-- www.123contactform.com script ends here -->
-          </td>
-        </tr>
-      </tbody>
-    </table>
+        <textarea name="message" placeholder="Your message"></textarea>
+
+        <button type="submit" class="btn">Send</button>
+      </form>
+    </div>
   </div>
 </section>
