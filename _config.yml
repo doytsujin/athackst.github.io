@@ -3,11 +3,8 @@ plugins:
   - jekyll-feed
 
 url: http://lyonthackston.com
-title: Allison Lyon Thackston
-email: allison@lyonthackston.com
-author: Allison Lyon Thackston
+title: Allison Thackston
+author: Allison Thackston
 description: >  
   Allison Thackston, Roboticist / Engineering Lead and Manager.
 copyright: 'Copyright &copy; 2014 Allison Thackston. All Rights Reserved.'
-
-post-img-location: /assets/img/posts
