@@ -1,0 +1,12 @@
+  - title: mail
+    icon: envelope
+    url: mailto:allison+website@lyonthackston.com
+  - title: linkedin
+    icon: linkedin
+    url: https://www.linkedin.com/in/allisonlyonthackston
+  - title: github
+    icon: github
+    url: https://github.com/athackst
+  - title: resume
+    icon: file-text
+    url: /assets/resources/ALT_Resume_01-01-2019.pdf

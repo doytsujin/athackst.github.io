@@ -10,16 +10,4 @@ description: >
   Allison Thackston, Roboticist / Engineering Lead and Manager.
 copyright: 'Copyright &copy; 2014 Allison Thackston. All Rights Reserved.'
 
-social:
-  - title: mail
-    icon: envelope
-    url: mailto:allison+website@lyonthackston.com
-  - title: linkedin
-    icon: linkedin
-    url: https://www.linkedin.com/in/allisonlyonthackston
-  - title: github
-    icon: github
-    url: https://github.com/athackst
-  - title: resume
-    icon: file-text
-    url: resources/ALT_Resume_01-01-2019.pdf
+post-img-location: /assets/img/posts

@@ -2,7 +2,7 @@
   <h1>{{ site.title }}</h1>
   <hr class="intro-divider">
   <ul class="list-inline intro-social-buttons">
-    {% for social in site.social %}
+    {% for social in site.data.social %}
     <li>
       <a href="{{ social.url }}" class="btn btn-default btn-lg" target="blank">
         <i class="fa fa-{{ social.icon }} fa-lg"></i>

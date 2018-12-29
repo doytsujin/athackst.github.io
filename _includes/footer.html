@@ -1,10 +1,12 @@
 <footer>
   <span class="footer-text">
-    | <a href="/index.html">About</a> | <a href="/experience.html">Experience</a> | <a href="/contact.html">Contact</a>
+    {% for item in site.data.navigation %}
+    | <a href="{{ item.url }}"> {{ item.title }}</a>
+    {% endfor %}
     |
   </span>
   <br />
   <div class="footer-copyright">
-    &copy; Allison Lyon Thackston 2014
+    {{ site.copyright }}
   </div>
 </footer>
