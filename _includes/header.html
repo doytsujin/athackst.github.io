@@ -4,7 +4,7 @@
   <ul class="list-inline intro-social-buttons">
     {% for social in site.data.social %}
     <li>
-      <a href="{{ social.url }}" class="btn btn-default btn-lg" target="_blank" onClick="ga('send', 'event', { eventCategory: 'download', eventAction: 'click', eventLabel: '{{ social.title }}'});">
+      <a href="{{ social.url }}" class="btn btn-default btn-lg" target="_blank" onClick="ga('send', 'event', { eventCategory: 'download', eventAction: 'click', eventLabel: '{{ social.title }}', eventValue: 50});">
         <i class="fa fa-{{ social.icon }} fa-lg"></i>
       </a>
     </li>
