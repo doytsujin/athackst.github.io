@@ -30,13 +30,21 @@
 
 	// Add the IDs of extensions you want installed when the container is created in the array below.
 	"extensions": [
+		// yaml for data files
+		"redhat.vscode-yaml",
+		// liquid templating syntax highlighting
+		"sissel.shopify-liquid",
+		// jekyll
 		"ginfuru.ginfuru-vscode-jekyll-syntax",
 		"ginfuru.vscode-jekyll-snippets",
+		// markdown
 		"yzhang.markdown-all-in-one",
-		"dotjoshjohnson.xml",
+		"davidanson.vscode-markdownlint",
+		// html/css
 		"ecmel.vscode-html-css",
 		"aeschli.vscode-css-formatter",
-		"zignd.html-css-class-completion",
-		"davidanson.vscode-markdownlint"
+		// spelling
+		"streetsidesoftware.code-spell-checker"
+		
 	]
 }
