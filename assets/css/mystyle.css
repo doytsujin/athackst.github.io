@@ -1,6 +1,5 @@
 ﻿.page {
-  margin-right: auto;
-  margin-left: auto;
+  margin: auto;
   min-width: 910px;
 }
 
@@ -14,7 +13,7 @@ h1 {
   line-height: 1.25em;
   text-transform: uppercase;
   text-align: center;
-  height: 80px;
+  height: auto;
 }
 
 h2 {
@@ -25,8 +24,8 @@ h2 {
   text-decoration: none;
   text-transform: lowercase;
   letter-spacing: 0px;
-  line-height: 1.5em;
-  height: 50px;
+  line-height: 1.0em;
+  height: auto;
 }
 
 h3 {
@@ -56,6 +55,9 @@ p {
   color: #797979;
   line-height: 1.5em;
   text-transform: none;
+  max-width: 1000px;
+  margin: auto;
+  padding-bottom: 10px;
 }
 
 a {
@@ -66,6 +68,17 @@ a {
 a:hover {
   color: #797979;
   text-decoration: underline;
+}
+
+ol {
+  font-family: 'Actor';
+  font-size: 16px;
+  color: #797979;
+  line-height: 1.5em;
+  text-transform: none;
+  width: 800px;
+  margin: auto;
+  padding-bottom: 20px;
 }
 
 .btn {
@@ -271,11 +284,6 @@ footer .footer-copyright {
   padding-bottom: 30px;
   padding-top: 30px;
   text-decoration: none;
-}
-
-.entry-content img {
-  width: auto;
-  margin: 10px auto;
 }
 
 .entry-divider {
