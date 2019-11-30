@@ -259,6 +259,21 @@ footer .footer-copyright {
   width: 600px;
 }
 
+.entry-content img[src*='#left'] {
+  float: left;
+  padding-right: 20px;
+  width: 300px;
+}
+.entry-content img[src*='#right'] {
+  float: right;
+  padding-left: 20px;
+  width: 300px;
+}
+.entry-content img[src*='#center'] {
+  display: block;
+  margin: auto;
+}
+
 .entry-content ul {
   padding-top: 0px;
   padding-bottom: 10px;
@@ -374,4 +389,89 @@ textarea {
   background-color: #f8f8f8;
   font-size: 16px;
   resize: none;
+}
+
+.highlighter-rouge {
+  background-color: #333333;
+  padding: 7px 7px 7px 10px;
+  margin: 20px 0 20px 0;
+  overflow: scroll;
+  color: #d0d0d0;
+}
+
+code {
+  font-family:'Bitstream Vera Sans Mono','Courier', monospace;
+}
+
+.highlight .err {
+  color: #151515;
+  background-color: #ac4142;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #f4bf75;
+}
+.highlight .cp {
+  color: #f4bf75;
+}
+.highlight .nt {
+  color: #f4bf75;
+}
+.highlight .o, .highlight .ow {
+  color: #d0d0d0;
+}
+.highlight .p, .highlight .pi {
+  color: #d0d0d0;
+}
+.highlight .gi {
+  color: #90a959;
+}
+.highlight .gd {
+  color: #ac4142;
+}
+.highlight .gh {
+  color: #6a9fb5;
+  background-color: #151515;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
+  color: #aa759f;
+}
+.highlight .kc {
+  color: #d28445;
+}
+.highlight .kt {
+  color: #d28445;
+}
+.highlight .kd {
+  color: #d28445;
+}
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+  color: #90a959;
+}
+.highlight .sr {
+  color: #75b5aa;
+}
+.highlight .si {
+  color: #8f5536;
+}
+.highlight .se {
+  color: #8f5536;
+}
+.highlight .nn {
+  color: #f4bf75;
+}
+.highlight .nc {
+  color: #f4bf75;
+}
+.highlight .no {
+  color: #f4bf75;
+}
+.highlight .na {
+  color: #6a9fb5;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #90a959;
+}
+.highlight .ss {
+  color: #90a959;
 }

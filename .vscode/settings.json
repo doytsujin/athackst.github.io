@@ -1,8 +1,17 @@
 {
     "cSpell.ignoreWords": [
         "allowfullscreen",
+        "devcontainer",
         "endunless",
         "forloop",
-        "frameborder"
+        "frameborder",
+        "gemfile",
+        "openssh",
+        "thackston"
+    ],
+    "cSpell.words": [
+        "dockerhub",
+        "robonaut",
+        "teleoperation"
     ]
 }
