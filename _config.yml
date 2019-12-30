@@ -1,6 +1,4 @@
 github: [metadata]
-plugins:
-  - jekyll-feed
 
 url: http://lyonthackston.com
 title: Allison Thackston
@@ -33,3 +31,7 @@ exclude:
   - LICENSE
   - README.md
   - CNAME
+
+collections:
+  articles:
+    output: true

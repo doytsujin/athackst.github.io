@@ -1,0 +1,18 @@
+---
+layout: default
+title: Thoughts
+---
+<div class="entry-content">
+  {% assign groups = site.articles | group_by: "category" | sort: "name" %}
+  {% for group in groups %}
+  <h1>{{ group.name }}</h1>
+  <ul style="list-style: none; text-align: center;">
+    {% for item in group.items %}
+    <h2>
+      <li><a href="{{ item.url }}">{{item.title}}</a></li>
+    </h2>
+
+    {%endfor%}
+  </ul>
+  {%endfor%}
+</div>

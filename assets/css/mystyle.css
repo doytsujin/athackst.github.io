@@ -30,8 +30,8 @@ h2 {
 
 h3 {
   font-family: 'Raleway';
-  font-weight: 200;
-  font-size: 40px;
+  font-weight: 300;
+  font-size: 32px;
   color: #7a7a7a;
   text-decoration: none;
   letter-spacing: 1px;
@@ -298,6 +298,10 @@ footer .footer-copyright {
   text-decoration: none;
 }
 
+.entry-content blockquote {
+  background-color: #ebebeb;
+}
+
 .entry-divider {
   width: 70%;
   border-top: 1px dashed #7d7d7d;
@@ -391,12 +395,49 @@ textarea {
   resize: none;
 }
 
-.highlighter-rouge {
+.language-plaintext {
+  color: #333333;
+  overflow: hidden;
+}
+
+.language-bash {
   background-color: #333333;
+  color: #d0d0d0;
+  overflow: scroll;
+}
+
+.language-javascript {
+  background-color: #333333;
+  color: #d0d0d0;
+  overflow: scroll;
+}
+
+.language-js {
+  background-color: #333333;
+  color: #d0d0d0;
+  overflow: scroll;
+}
+
+
+.language-docker {
+  background-color: #333333;
+  color: #d0d0d0;
+  overflow: scroll;
+}
+
+.language-xml {
+  background-color: #f8f8f8;
+  overflow: scroll;
+}
+
+.language-yaml {
+  background-color: #f8f8f8;
+  overflow: scroll;
+}
+
+.highlighter-rouge {
   padding: 7px 7px 7px 10px;
   margin: 20px 0 20px 0;
-  overflow: scroll;
-  color: #d0d0d0;
 }
 
 code {
