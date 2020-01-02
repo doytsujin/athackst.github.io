@@ -4,8 +4,7 @@ url: http://lyonthackston.com
 title: Allison Thackston
 author: Allison Thackston
 description: >  
-  Allison Thackston, Roboticist / Engineering Lead and Manager.
-copyright: 'Copyright &copy; 2014 Allison Thackston. All Rights Reserved.'
+  Allison Thackston, Roboticist && Engineering Lead and Manager.
 
 # Jekyll 3 now only supports Kramdown for Markdown
 kramdown:
