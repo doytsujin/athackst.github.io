@@ -27,7 +27,7 @@ I've also done all the work to get you up and running, so long as you have
 
 * [vscode](https://code.visualstudio.com/)
 * [docker](https://www.docker.com/products/container-runtime)
-* [set up the DeepRacer for remote connection](articles/../2_aws_deepracer_software.html)
+* [set up the DeepRacer for remote connection](/articles/2_aws_deepracer_software.html#connecting-to-another-computer)
 
 you should be able to use my [deepracer_ws](https://github.com/athackst/deepracer_ws) as an IDE for the DeepRacer.  For more information on how I set up my workspaces, check my article on [docker development](/articles/docker_development.html).
 
