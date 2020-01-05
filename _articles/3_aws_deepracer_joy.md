@@ -11,7 +11,7 @@ Since the DeepRacer comes pre-loaded with [ROS Kinetic](http://wiki.ros.org/kine
 
 ## ROS Messages
 
-The real power of ROS lies in the standardization of messages.  Suddenly, once there was a common messaging system and interfaces it became much easier for researchers at different universities to share the code they developed for their research with each other.  They were also freed to focus on the portion of the robotics problem they were actually interested in researching instead of spending all of their time on the non-trivial task of bringing up an entire robotic software system.  
+The real power of ROS lies in the standardization of messages.  With ROS there was suddenly a common messaging system and interfaces. and it became much easier for researchers at different universities to share the code they developed for their research with each other.  They were also freed to focus on the portion of the robotics problem they were actually interested in researching instead of spending all of their time on the non-trivial task of bringing up an entire robotic software system.  
 
 So it was an odd choice for Amazon to eschew all standard messages (except for video?) when they released the DeepRacer.  Also odd is that I couldn't find an open source version of the messages on their github page, making it much more difficult to hack into the system.
 
@@ -23,7 +23,13 @@ You're welcome Amazon.
 
 ## Workspace setup
 
-I've also done all the work to get you up and running, so long as you have [vscode](https://code.visualstudio.com/) and [docker](https://www.docker.com/products/container-runtime) installed, you should be able to use my [deepracer_ws](https://github.com/athackst/deepracer_ws) as an IDE for the DeepRacer.  For more information on how I set up my workspaces, check my article on [docker development](/articles/docker_development.html).
+I've also done all the work to get you up and running, so long as you have
+
+* [vscode](https://code.visualstudio.com/)
+* [docker](https://www.docker.com/products/container-runtime)
+* [set up the DeepRacer for remote connection](articles/../2_aws_deepracer_software.html)
+
+you should be able to use my [deepracer_ws](https://github.com/athackst/deepracer_ws) as an IDE for the DeepRacer.  For more information on how I set up my workspaces, check my article on [docker development](/articles/docker_development.html).
 
 ```bash
 git clone --branch articles/deepracer_joy https://github.com/athackst/deepracer_ws.git
