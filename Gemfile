@@ -8,5 +8,3 @@ group :jekyll_plugins do
   gem 'jekyll-seo-tag'
   gem 'github-pages'
 end
-
-gem 'faraday', '<1.0.0'

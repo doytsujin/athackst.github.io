@@ -11,7 +11,7 @@ Since the DeepRacer comes pre-loaded with [ROS Kinetic](http://wiki.ros.org/kine
 
 ## ROS Messages
 
-The real power of ROS lies in the standardization of messages.  With ROS there was suddenly a common messaging system and interfaces. and it became much easier for researchers at different universities to share the code they developed for their research with each other.  They were also freed to focus on the portion of the robotics problem they were actually interested in researching instead of spending all of their time on the non-trivial task of bringing up an entire robotic software system.  
+The real power of ROS lies in the standardization of messages.  With ROS there was suddenly a common messaging system and interfaces and it became much easier for researchers at different universities to share the code they developed for their research with each other.  They were also freed to focus on the portion of the robotics problem they were actually interested in researching instead of spending all of their time on the non-trivial task of bringing up an entire robotic software system.  
 
 So it was an odd choice for Amazon to eschew all standard messages (except for video?) when they released the DeepRacer.  Also odd is that I couldn't find an open source version of the messages on their github page, making it much more difficult to hack into the system.
 
@@ -32,10 +32,12 @@ I've also done all the work to get you up and running, so long as you have
 you should be able to use my [deepracer_ws](https://github.com/athackst/deepracer_ws) as an IDE for the DeepRacer.  For more information on how I set up my workspaces, check my article on [docker development](/articles/docker_development.html).
 
 ```bash
-git clone --branch articles/deepracer_joy https://github.com/athackst/deepracer_ws.git
+git clone --branch articles/deepracer_joy --recurse-submodules https://github.com/athackst/deepracer_ws.git
 ```
 
-This will give you my version of my workspace I used for this article.  In it contains a docker container and my vscode settings.
+This will give you my version of my workspace and code that I used for this article.  In it contains a docker container and my vscode settings.
+
+> Note: I ran this on my laptop and connected to the deepracer through the network.
 
 ### Docker container
 
@@ -118,7 +120,7 @@ Knowing ROS has joystick teleoperation packages, I figured it wouldn't be too di
 
 ### Setting up your gamepad
 
-The first thing you'll want to do to set up your gamepad is verify that you have connection to it.  You can do this with the jstest package (which is installed into the docker container).  
+The first thing you'll want to do to set up your gamepad is verify that you have connection to it.  You can do this with the jstest package (which is installed into the docker container).
 
 1. Find the name of your joystick/gamepad
 
@@ -190,6 +192,7 @@ The first thing you'll want to do to set up your gamepad is verify that you have
 
    ```bash
    export ROS_MASTER_URI=http://$DEEPRACER_IP:11311
+   export ROS_HOSTNAME=$HOSTNAME
    roslaunch deepracer_joy deepracer_joy.launch
    ```
 
@@ -197,6 +200,6 @@ The first thing you'll want to do to set up your gamepad is verify that you have
 
     ![deepracer joystick control](/assets/img/deepracer_joy.gif)
 
-> Note: This will allow you to control your DeepRacer from your laptop/host computer via a gamepad.  There may be additional setup steps that are required to control the DeepRacer directly from the device such as installing bluetooth and other drivers appropriately and editing the startup script.
+> Note: If you want to run this onboard, checkout the next post on [running the deepracer_joy package onboard](/articles/4_aws_deepracer_joy_onboard.html)
 >
 > This is only tested as working with Ubuntu 18.04 as the host.  In theory this should work with other flavors of linux based systems as well.  This has not been tested on MacOsx or Windows systems and may require additional settings.
