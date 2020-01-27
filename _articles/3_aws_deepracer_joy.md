@@ -15,7 +15,7 @@ The real power of ROS lies in the standardization of messages.  With ROS there w
 
 So it was an odd choice for Amazon to eschew all standard messages (except for video?) when they released the DeepRacer.  Also odd is that I couldn't find an open source version of the messages on their github page, making it much more difficult to hack into the system.
 
-Since message headers are needed in order for other software to interface with your system, it's somewhat customary in ROS to separate messages into their own package.  That way, outside contributors can both introspect and publish to your interfaces without having to have the rest of your code or dependencies.  Amazon doesn't appear to have done this.  They seem to have interleaved the new messages they've created in with the packages they created.  It is also confusing as to why they decided to create their own control message instead of using the customary [twist](https://docs.ros.org/api/geometry_msgs/html/msg/Twist.html).
+Since message headers are needed in order for other software to interface with your system, it's somewhat customary in ROS to separate messages into their own package.  That way, outside contributors can both introspect and publish to your interfaces without having to have the rest of your code or dependencies.  Amazon doesn't appear to have done this.  They seem to have interleaved the new messages they've created in with the packages they created.
 
 I'm going to assume that Amazon ignorance of ROS standards/best practices is to blame here.  So I've created a package of the [deepracer messages](https://github.com/athackst/aws_deepracer_msgs) for you (so you don't have to).  
 
@@ -51,6 +51,8 @@ In order to connect the docker container to the DeepRacer and use a gamepad as i
 
 You'll need to run the container in "privileged" mode by setting the `--privileged` tag in the run arguments for the container.  This will allow you to access the gamepad.
 
+> Note for windows users:  the --privileged tag is not supported in docker for windows.  You will need to develop through a VM, or run directly on the deepracer to connect the gamepad for testing.
+
 #### Network
 
 You'll also want to share the host network since ROS communicates over ephemeral ports by setting `--network=host` tag in the run arguments for the container.
@@ -83,20 +85,12 @@ I've added a couple of tasks you can use to help use the workspace.  Tasks are h
    catkin_make install
    ```
 
-4. source
-
-   After you build your workspace you'll need to source it for ROS to be able to resolve the new packages you've created.  This will try to source the install space, and if it doesn't exist tries to source the devel space.
-
-   ```bash
-   source install/setup.bash || source devel/setup.bash
-   ```
-
-5. launch
+4. launch
 
    This will launch the deepracer_joy with your settings.  Note this depends on the "source" tasks, which is convenient because re-sourcing your workspace after you make a change is an often overlooked step.
 
    ```bash
-   roslaunch deepracer_joy deepracer_joy.launch
+   source install/setup.bash 2> /dev/null || source devel/setup.bash && roslaunch deepracer_joy deepracer_joy.launch
    ```
 
 ## DeepRacer ROS messages
@@ -181,6 +175,8 @@ The first thing you'll want to do to set up your gamepad is verify that you have
 
     I've always found ROS packages like this.  They get you 90% to what you want to develop, but still require some additional tweaking to get all the functionality you want.
 
+    Another thing to not is that the deepracer command is 'throttle' and 'angle' which means that mapping both to a single control stick on a gamepad won't work the way you think it will.  As you move the joystick toward a pure turning motion, the forward velocity goes to zero.  This means that your deepracer won't be able to turn much unless you either publish out the kinematic conversion or you map the fields to different control sticks.  For now, I've just mapped the axis.
+
 5. Build and source the code
 
    ```bash
@@ -192,7 +188,7 @@ The first thing you'll want to do to set up your gamepad is verify that you have
 
    ```bash
    export ROS_MASTER_URI=http://$DEEPRACER_IP:11311
-   export ROS_HOSTNAME=$HOSTNAME
+   export ROS_IP=<your ip address>
    roslaunch deepracer_joy deepracer_joy.launch
    ```
 
@@ -202,4 +198,4 @@ The first thing you'll want to do to set up your gamepad is verify that you have
 
 > Note: If you want to run this onboard, checkout the next post on [running the deepracer_joy package onboard](/articles/4_aws_deepracer_joy_onboard.html)
 >
-> This is only tested as working with Ubuntu 18.04 as the host.  In theory this should work with other flavors of linux based systems as well.  This has not been tested on MacOsx or Windows systems and may require additional settings.
+> This is only tested as working with Ubuntu 18.04 as the host.  In theory this should work with other flavors of linux based systems as well.  This has not been tested on MacOsx or Windows systems and they may require additional settings.
