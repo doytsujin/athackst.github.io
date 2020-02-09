@@ -7,4 +7,4 @@ image: /assets/img/posts/2016-07-01/SpringerROS.jpg
 
 I'm a contributing author!
 
-See: ROS in space: A case study on Roboanut 2
+See: ROS in space: A case study on Robonaut 2

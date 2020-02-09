@@ -1,6 +1,6 @@
 ---
 layout: link_entry
-title: athackst/prosillica_driver
+title: athackst/prosilica_driver
 link: https://github.com/athackst/prosilica_driver
 ---
 Check out the nodelet version of the prosilica driver I wrote!  
