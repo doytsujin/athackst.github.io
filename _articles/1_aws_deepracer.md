@@ -2,6 +2,7 @@
 layout: text_entry
 title: Unboxing the AWS Deep Racer
 category: Robotics
+series: DeepRacer
 tags: deepracer
 ---
 

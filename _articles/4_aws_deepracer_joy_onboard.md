@@ -2,6 +2,7 @@
 layout: text_entry
 title: Running the gamepad onboard the DeepRacer
 category: Robotics
+series: DeepRacer
 tags: deepracer
 ---
 
@@ -82,7 +83,7 @@ git clone --branch articles/deepracer_joy_onboard --recurse-submodules https://g
 Since I've included a deployment image in the `deepracer_ws`, let's build and tag that.
 
 ```bash
-docker build -f .deploycontainer/Dockerfile . -t deepracer_ws
+docker build -f .deploycontainer/Dockerfile . -t deepracer_joy
 ```
 
 My deployment image _does_ use multi-stage, so you don't need to set up vscode or build it in another image in order to create the deployment image. You just need to have docker installed.
@@ -110,8 +111,8 @@ Congratulations, you are now the proud host of a docker registry.
 Now all you need to do is build and tag any image with the prefix `localhost:5000` and you'll be able to push your image to your local registry.
 
 ```bash
-docker build -f .deploycontainer/Dockerfile . -t localhost:5000/deepracer_ws
-docker push localhost:5000/deepracer_ws
+docker build -f .deploycontainer/Dockerfile . -t localhost:5000/deepracer_joy
+docker push localhost:5000/deepracer_joy
 ```
 
 ### Connect the DeepRacer to the local docker registry
@@ -133,7 +134,7 @@ Replace 'your_hostname' with the hostname of the computer you set up as the loca
 Now you can pull the docker image!
 
 ```bash
-docker pull your_hostname.local:5000/deepracer_ws
+docker pull your_hostname.local:5000/deepracer_joy
 ```
 
 ## Setup your gamepad
@@ -157,7 +158,7 @@ The steps to launch the gamepad controller on the DeepRacer are similar to the [
     Run the container and check that the device is connected appropriately inside the container.
 
     ```bash
-    docker run --privileged --network=host -it your_hostname.local:5000/deepracer_ws bash
+    docker run --privileged --network=host -it your_hostname.local:5000/deepracer_joy bash
     jstest --normal /dev/input/js0
     ```
 
@@ -184,7 +185,5 @@ The steps to launch the gamepad controller on the DeepRacer are similar to the [
    The easiest way to make sure the deepracer_joy is always loaded, is by configuring docker to always restart it.
 
    ```bash
-   docker run --network=host --privileged --restart always your_hostname.local:5000/deepracer_ws roslaunch deepracer_joy deepracer_joy.launch teleop_config:=`rospack find deepracer_joy`/config/xbox_360.yaml
+   docker run --network=host --privileged --restart always --name deepracer_joy your_hostname:5000/deepracer_joy bash -c "roslaunch deepracer_joy deepracer_joy.launch teleop_config:=/opt/deepracer_ws/share/deepracer_joy/config/xbox_360.yaml"
    ```
-
-    > Note: You can pass arguments to the launch file.  Here, I'm passing an alternative configuration file for my xbox 360 gamepad.

@@ -2,6 +2,7 @@
 layout: text_entry
 title: Digging into ROS on the DeepRacer
 category: Robotics
+series: DeepRacer
 tags: deepracer
 ---
 

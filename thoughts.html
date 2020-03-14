@@ -3,16 +3,17 @@ layout: default
 title: Thoughts
 ---
 <div class="entry-content">
-  {% assign groups = site.articles | group_by: "category" | sort: "name" %}
+  {% assign groups = site.articles | group_by: "category"  %}
   {% for group in groups %}
   <h1>{{ group.name }}</h1>
-  <ul style="list-style: none; text-align: center;">
-    {% for item in group.items %}
-    <h2>
-      <li><a href="{{ item.url }}">{{item.title}}</a></li>
-    </h2>
-
+  {% assign series = group.items | group_by: "series" | sort: "name" %}
+  {% for sub_group in series %}
+  <h2>{{ sub_group.name }}</h2>
+  <ul style="list-style: none;">
+    {% for item in sub_group.items %}
+    <li><a href="{{ item.url }}">{{item.title}}</a></li>
     {%endfor%}
   </ul>
+  {%endfor%}
   {%endfor%}
 </div>
