@@ -1,6 +1,6 @@
 ---
 layout: text_entry
-title: Setting up VSCode, Docker, and ROS2
+title: VSCode, Docker, and ROS2
 category: Software Development
 tags: [vscode, docker, ros2]
 ---
