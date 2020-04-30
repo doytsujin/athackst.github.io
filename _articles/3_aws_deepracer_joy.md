@@ -33,7 +33,7 @@ I've also done all the work to get you up and running, so long as you have
 you should be able to use my [deepracer_ws](https://github.com/athackst/deepracer_ws) as an IDE for the DeepRacer.  For more information on how I set up my workspaces, check my article on [docker development](/articles/docker_development.html).
 
 ```bash
-git clone --branch articles/deepracer_joy --recurse-submodules https://github.com/athackst/deepracer_ws.git
+git clone --branch articles/aws_deepracer_joy --recurse-submodules https://github.com/athackst/deepracer_ws.git
 ```
 
 This will give you my version of my workspace and code that I used for this article.  In it contains a docker container and my vscode settings.
