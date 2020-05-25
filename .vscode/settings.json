@@ -119,5 +119,6 @@
         "wifi",
         "womp",
         "xbox"
-    ]
+    ],
+    "files.insertFinalNewline": true
 }

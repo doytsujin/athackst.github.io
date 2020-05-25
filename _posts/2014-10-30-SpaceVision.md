@@ -1,7 +1,7 @@
 ---
-layout: link_entry
+layout: image_entry
 title: Space Vision Invited Panelist
-link: https://spacevision.seds.org/2014/
+image: /assets/img/SpaceVision-2014_banner.png
 ---
 I was an invited speaker at the SpaceVision annual national conference of Students for the Exploration and Development of Space.  
 

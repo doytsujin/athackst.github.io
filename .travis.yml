@@ -1,4 +1,0 @@
-os: linux
-dist: bionic
-language: ruby
-script: "bundle exec jekyll build"

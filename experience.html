@@ -12,11 +12,13 @@ title: Experience
         {% if post.layout=='link_entry' %}
         <a href="{{ post.link }}" target="_blank">
           <h3> {{ post.title }} </h3>
-          <img src="{{ post.image }}" />
+          {% if page.image %}
+          <img src="{{ page.image }}" alt="{{ page.title }}" />
+          {% endif %}
         </a>
         {{ post.content }}
         {% elsif post.layout=='image_entry' %}
-        <img src="{{ post.image }}" />
+        <img src="{{ post.image }}"  alt="{{ page.title }}" />
         <h3>{{ post.title }}</h3>
         {{ post.content }}
         {% elsif post.layout=='text_entry' %}

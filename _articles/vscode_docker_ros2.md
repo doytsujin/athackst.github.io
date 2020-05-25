@@ -13,7 +13,7 @@ ROS2 is the next generation of software libraries for robotics development.  Eve
 
 ## VSCode and Docker
 
-First, I'm going to assume you already have [vscode](https://code.visualstudio.com/) and [docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/) installed.  If not, check out my installation instructions [here](/blog/docker_development.html).
+First, I'm going to assume you already have [vscode](https://code.visualstudio.com/) and [docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/) installed.  If not, check out my installation instructions [here](/articles/docker_development.html).
 
 Ok, so now that you have docker and vscode installed, let's add some [ros2](https://index.ros.org/doc/ros2/)!
 
