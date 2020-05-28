@@ -11,11 +11,11 @@ Lately, I've been experimenting with using Docker for all of my software develop
 
 Yes. All of it.
 
-In the past, I've only really used docker in a professional setting. Using it to capture and share somewhat esoteric code dependencies ensures a developer doesn't become derailed on an errant system update. It also helps new hires get into the code base faster since they don't have to download and install a million different dependencies of a specific version. It also helps companies support (or stage upgrades on) different workstation builds, since hosting the code in a docker container decouples it from the host operating system.  
+In the past, I've only used docker in a professional setting. Using it to capture and share somewhat esoteric code dependencies ensures a developer doesn't become derailed on an errant system update. It also helps new hires to get into the code base faster since they don't have to download and install a million different dependencies. It also helps companies support (or stage upgrades on) different workstation builds, since hosting the code in a docker container decouples it from the host operating system.  
 
 But this all seems like flagrant overkill for at home, for-fun coding.  
 
-You only have one workstation you care about. Plus, it's not like you have to on-board anyone else into your personal codebase. So why would you ever care about using Docker for personal code development?  
+You only have one workstation you care about. Plus, it's not like you have to on-board anyone else into your own codebase. So why would you ever care about using Docker for personal code development?  
 
 I've found that even with my personal code development, I often want to have experimental spaces where I can download different libraries just to play around with them. I don't really want to have them installed on my system because:
 
@@ -23,17 +23,17 @@ I've found that even with my personal code development, I often want to have exp
 2. they may conflict with some other library I have on my system and
 3. I'd have to continually keep it up to date and synced with compatible library versions.
 
-I realized when I decided to make a new website for [ProjectRobotPlayground](http://projectrobotplayground.com) that I had to refer back to my previous notes on how to set up the environment again. And of course, this time some dependent library in Github pages was no longer compatible with the new version of Ubuntu I was running. This all contributed to me wasting my precious free time wrestling with dependencies.  
+I realized when I decided to make a new website for [ProjectRobotPlayground](http://projectrobotplayground.com) that I had to refer back to my previous notes on how to set up the correct environment. And of course, this time some dependent library in Github pages was no longer compatible with the new version of Ubuntu I was running. This all contributed to me wasting my precious free time wrestling with dependencies.  
 
-And then it hit me.
+And then it hit me:
 
-I don't have to keep doing this. I can just make a Docker image and use that! And with VSCode, I can do all of my development for that one project within that one container as well!  
+I can just make a Docker image and use that! And with VSCode, I can do all of my development for that one project within that one container as well!  
 
-So I've decided to share this little hack with you.
+So I decided to share this little hack with you.
 
 ## VSCode
 
-For those of you who are unaware.  [VSCode](https://code.visualstudio.com/) is an open-source editor that was developed by Microsoft.  It is deliciously compatible with nearly any operating system and has a large base of extensions you can download and install.
+For those of you who are unaware,  [VSCode](https://code.visualstudio.com/) is an open-source editor that was developed by Microsoft.  It is deliciously compatible with nearly any operating system and has a large base of extensions you can download and install.
 
 For me, it has been far more stable than [atom](https://atom.io/) and less complicated to set up than [sublime](https://www.sublimetext.com/).  Also, VS Code has Intellisense (which is just awesome), and it has built-in debugging.  
 
@@ -51,9 +51,9 @@ You don't need to mess around with dependencies or worry if you accidentally uni
 
 ## How to set up VSCode with Docker
 
-One of the main reasons I really love VSCode is its ability to be used in a ["remote" configuration](https://code.visualstudio.com/docs/remote/remote-overview).  Meaning, I can be editing files that don't live on my computer (like those in a client like Docker).
+One of the reasons I first started to love VSCode is using it as a  ["remote" client](https://code.visualstudio.com/docs/remote/remote-overview).  This meant I could edit files that didn't live on my computer.
 
-I first started using this for work, since I could ssh into my machine and then bring up my familiar VS Code editor to work remotely.  I found this much more productive than ssh-ing into my machine and using Vim.  Yes, I know there are people out there that only code in Vim.  I prefer a more fully-featured IDE.  But for those die-hards out there, VS Code has Vim key bindings, so you can switch without having to re-memorize your key combos.
+I first started using this for work, since I could ssh into my machine using my familiar VS Code editor to work remotely.  I found this much more productive than ssh-ing into my machine and using Vim.  Yes, I know there are people out there that only code in Vim.  I prefer a more fully-featured IDE.  But for those die-hards out there, VS Code has Vim key bindings, so you can switch without having to re-memorize your key combos.
 
 Later, I started playing around with [docker based development](https://github.com/athackst/workstation_setup/tree/master/examples) as I was playing with new [ROS2](https://index.ros.org/doc/ros2/) versions.  Then, I started using Docker and VS Code for everything.
 
@@ -65,11 +65,11 @@ The following instructions assume you are somewhat familiar VS Code and Docker. 
 
 Then, follow the instructions on [dockerhub](https://hub.docker.com/search/?type=edition&offering=community) to install docker CE (community edition).
 
-Finally, you'll want to install the VS Code plugin that allows you to attach to a docker container. [Instructions here](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+Finally, you'll want to install the VS Code plugin that allows you to attach to a docker container. [Instructions here.](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
 ### 2. Set up your workspace
 
-Open VSCode and clock on the green square in the bottom right corner.
+Open VSCode and click on the green square in the bottom right corner.
 
 ![vscode container menu](/assets/img/vscode_container_open_ss.png)
 
@@ -85,13 +85,13 @@ This will make a `.devcontainer` folder inside your workspace.  If you look at i
 
 You can even set up VS Code plugins _inside your container_ so they will automatically load when you start the container.
 
-Hello, linting tools!
+Hello, increased productivity!
 
 ![vscode container menu](/assets/img/vscode_extensions_ss.png)
 
 ### 4. Some Gotchas
 
-It's a good idea to start the docker container with your user id and group (instead of root). This is because any edits you make in VSCode are made _inside_ the container and therefore all files will be owned by the container's user account.  This means your containers need to have a non-root user.  
+It's a good idea to start the docker container with your user id and group (instead of root). This is because any edits you make in VSCode are made _inside_ the container and therefore all files will be owned by the container's user.  This means your container should have a non-root user.  
 
 _As of [VS Code 1.41](https://github.com/microsoft/vscode-docs/blob/master/remote-release-notes/v1_41.md) the non-root user is automatically matched to your user and gid on Linux.  Additionally, your ssh-agent is automatically forwarded into the container._
 

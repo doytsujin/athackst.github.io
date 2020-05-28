@@ -12,7 +12,7 @@ But don't! (Please don't.)
 
 There's a better way that doesn't involve compressing an entire disk image.
 
-Docker images are really meant to be transferred through a Docker Registry.
+Docker images are meant to be transferred through a Docker Registry, and so it's better to use a registry to share your image than a zip file.
 
 You could set one up on a cloud service (aws, gcloud, or even git lets you do this!)
 
@@ -40,7 +40,7 @@ Now your computer will run a docker registry, even if you restart your computer.
 
 For any other machine on your local network that you'd like to use the docker registry for, all you need to do is set up the docker daemon to use it.
 
-Since it's a local registry, it doesn't have the security (https) that remote registries do.  So we will need to add it to the exception list so that we'll be allowed to pull from it.
+Since it's a local registry, it doesn't have the security (https) that remote registries do.  We will need to add it to the exception list so that we'll be allowed to pull from it.
 
 Edit the `/etc/docker/daemon.json` to have the following line
 

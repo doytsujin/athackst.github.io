@@ -5,7 +5,9 @@ category: Software Development
 tags: [vscode, docker, github_pages]
 ---
 
-As a casual user of Github Pages, I find that I continually have to remember how I set up the development environment so I can edit my website.  There's nothing worse to losing hours to configuration nightmares on coding that is supposed to be for fun.  And since I use [docker and vscode](/articles/docker_development.html), it was a pretty easy decision to try to put my website workspace into a container.
+As a casual user of Github Pages, I find that it's difficult to remember how I set up the development environment so I can edit my website.  There's nothing worse to losing hours to configuration nightmares on coding that is supposed to be for fun.  And since I use [docker and vscode](/articles/docker_development.html), it was a pretty easy decision to try to put my website workspace into a container.
+
+The following describes how I use docker to set up a standardized environment for Github pages.
 
 ## Make a docker image
 
@@ -17,17 +19,15 @@ But now that I've made one, I'm sharing it with you!
 
 ### Find a base docker image
 
-The first thing you need to do is create a docker image.  Docker images always have a `FROM` tag which lets you build off of other docker images. Sometimes, the best you can do is start with a blank operating system and build your image from scratch.  Luckily, jekyll already supports a pages version in their [docker repository](https://hub.docker.com/r/jekyll/jekyll/tags).
+The first thing you need to do is create a docker image.  Docker images always have a `FROM` tag which lets you build off of other docker images. Sometimes, the best you can do is start with a blank operating system and build your image from scratch.  Luckily, Jekyll already supports a `pages` version in their [docker repository](https://hub.docker.com/r/jekyll/jekyll/tags).
 
-So let's go ahead and use jekyll's docker image for pages.  By doing this, we can keep up to date with the latest compatible library set for github pages easily.
+So let's go ahead and use Jekyll's docker image for pages.  By doing this, we can keep up to date with the latest compatible library set for Github pages easily.
 
 ```docker
 FROM jekyll/jekyll:pages
 ```
 
-This was something that I struggled with when initially creating the image.  Recently, there was a change in bundler that was [ABI incompatible](https://bundler.io/blog/2019/01/04/an-update-on-the-bundler-2-release.html) and the old instructions I was using weren't working.  By using a supported image, the makers of jekyll will be the ones to ensure that all of the packages are compatible and work with github pages.
-
-How cool is that?
+By using a supported image, the makers of Jekyll will be the ones to ensure that all of the packages are compatible and work with Github pages.  This means that the container is more or less guaranteed to be compatible with Github pages.  Before I started using this container, I had issues tracking which versions of packages were compatible.  There was even a change in bundler that was [ABI incompatible](https://bundler.io/blog/2019/01/04/an-update-on-the-bundler-2-release.html) and the old instructions I was using weren't working anymore.
 
 Sign me up for getting to the good stuff faster!
 
@@ -41,7 +41,7 @@ FROM jekyll/jekyll:pages
 COPY Gemfile /srv/jekyll/
 ```
 
-My Gemfile is really simple.  It only has the github pages gem in it.
+My Gemfile is simple.  It only has the Github pages gem in it.
 
 ```js
 source 'https://rubygems.org'
@@ -50,9 +50,9 @@ gem 'github-pages', group: :jekyll_plugins
 
 ### Install dependencies
 
-Even though the base docker image is pages compatible, you can't develop on it yet. The tools you'll need to have in order to serve your github pages website locally aren't included by default.  You will need to download and install the development libraries for your Gemfile.  But first, you will need to make sure that you have all of the basic libraries you need.  Since the image this is based on is a smaller, stripped down image, it may not have many of the libraries you're used to having by default.
+Even though the base docker image is pages compatible, you can't develop on it yet. The tools you'll need to have to serve your Github pages website locally aren't included by default.  You will need to download and install the development libraries for your Gemfile.  But first, you will need to make sure that you have all of the basic libraries you need.  Since the image this is based on is a smaller, stripped-down image, it may not have many of the "standard" development libraries.
 
-I added the following:
+I added the following to my dockerfile:
 
 ```docker
 # Install development packages
@@ -80,24 +80,24 @@ RUN apk update && apk add \
 RUN bundle install && bundle update
 ```
 
-Note that I've added a couple of extra dependencies here as well.  I've added openssh, sudo, and git-bash-completion.
+Note that I've added a couple of extra dependencies here as well.  I've added OpenSSH, sudo, and git-bash-completion.
 
 ### Update the user
 
-Since we'll be developing inside a docker container, it's important that the docker container have a user with your same id and group.  This way, when you save files with the container running, you will be saving files with your permissions.  You'll also want that user to have sudo access.
+Since we'll be developing inside a docker container, it should have a non-root user.  The non-root user will allow files saved within the container to have your user and group permissions.  You'll also want that user to have `sudo` access.
 
-You may have heard that adding a non-root user to your dockerfile is good practice, but giving that user sudo access defeats the purpose.  This is true for an image you're planning on deploying (why lock the door if you're handing out keys?) but not really necessary for a docker container that's only going to be used for development like this one.
+You may have heard that adding a non-root user to your dockerfile is good practice, but giving that user sudo access defeats the purpose.  This is true for an image you're planning on deploying (why lock the door if you're handing out keys?) but not necessary for a docker container that's only going to be used for development like this one.
 
 The user needs sudo access so that you can install extensions and other addons (and is just dang useful to have it).
 
 ```docker
-# Set up user so that we can share ssh credentials.
+# Set up container user.
 ENV USERNAME=jekyll
 RUN echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
     && chmod 0440 /etc/sudoers.d/$USERNAME
 ```
 
-One last thing you may want to do is install completion scripts.  Oftentimes when I'm working on code, I'll want to do things like commit my changes to the github repo from within the integrated terminal.  And have nice things like tab-completion working appropriately.
+One last thing you may want to do is install bash-completion scripts.  Oftentimes when I'm working on code, I'll want to do things like commit my changes to Github from within the integrated terminal with nice things like tab-completion working appropriately.
 
 ```docker
 # Set up git completion.
@@ -106,7 +106,7 @@ RUN echo "source /usr/share/bash-completion/completions/git" >> /home/$USERNAME/
 
 ### Expose the port
 
-Finally, you'll want to expose the port that the container will publish to when you server your website locally using `bundle exec jekyll serve`
+Finally, you'll want to expose the port that the container will publish to when you serve the website locally using `bundle exec jekyll serve`
 
 ```docker
 EXPOSE 4000
@@ -156,7 +156,7 @@ RUN apk update && apk add \
 
 RUN bundle install && bundle update
 
-# Set up user so that we can share ssh credentials.
+# Set up a non-root user.
 ENV USERNAME=jekyll
 RUN echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
     && chmod 0440 /etc/sudoers.d/$USERNAME
@@ -223,7 +223,7 @@ Let's take a look:
 
 ### Remote user
 
-The first things you're going to want to do is set the remote user so that your id and group will be properly exported into the container.
+The first thing you're going to want to do is set the remote user so that your id and group will be properly exported into the container.
 
 ```javascript
     "remoteUser": "jekyll",
@@ -248,24 +248,13 @@ You can optionally set it up to run on a _specific_ port by adding the following
 
 ### SSH Credentials
 
-The commands are needed in order for all systems (including windows based systems) to mount their .ssh keys.
-
-```javascript
-    "runArgs": [
-    "-v", "${env:HOME}${env:USERPROFILE}/.ssh:/root/.ssh-localhost:ro"
-],
-```
-
-```javascript
-    // Commands to run after the container is created.
-    "postCreateCommand": "sudo cp -r /root/.ssh-localhost ~ && sudo chown -R $(id -u):$(id -g) ~/.ssh-localhost && mv ~/.ssh-localhost ~/.ssh && chmod 700 ~/.ssh && chmod 600 ~/.ssh/*"
-```
+SSH Credentials are automatically shared with the container after [VS Code v1.41](https://github.com/microsoft/vscode-docs/blob/master/remote-release-notes/v1_41.md)
 
 ### Extensions
 
-The last setting of note is the extensions.  These are extensions that will be loaded into the docker container after it has been built.  These are not required, but may be nice to include to ensure that productivity boosting extensions are available and configured correctly.
+The last setting of note is the extensions setting.  These are the extensions that will be loaded into the docker container after it has been built.  These are not required but are nice to include to ensure that productivity-boosting extensions are available and configured correctly.
 
-For github pages, I like the following extensions.
+For Github pages, I like the following extensions.
 
 ```javascript
     "extensions": [
@@ -288,4 +277,4 @@ For github pages, I like the following extensions.
     ]
 ```
 
-And that's it!  You're ready to start your own github pages site.
+And that's it!  You're ready to start your own Github pages site.
