@@ -6,7 +6,7 @@ tags: [docker]
 ---
 Once you've started developing your code [using docker](/articles/docker_development.html) there will inevitably come a time when you'd like to share your workspace (code and all!) with someone else or put it on another computer.
 
-A small little foray into google will tell you that there is a docker command called `docker save` that will let you do just that.  
+A small foray into google will tell you that there is a docker command called `docker save` that will let you do just that.  
 
 But don't! (Please don't.)
 
