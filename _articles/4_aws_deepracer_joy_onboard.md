@@ -6,11 +6,11 @@ series: DeepRacer
 tags: deepracer
 ---
 
-After I hooked up a [gamepad through ROS](/articles/3_aws_deepracer_joy.html) to the DeepRacer, the next step was to get it loaded directly onto the DeepRacer.  Because what good is a remote control for an RC car if you need to also set up a laptop to use it?
+After I hooked up a [gamepad through ROS](/articles/3_aws_deepracer_joy.html) to the DeepRacer, the next step was to get it loaded directly onto the DeepRacer.  Because what good is a remote control for an RC car if you need to set up a laptop to use it?
 
 There are two main ways in which the gamepad controller could be loaded into the DeepRacer.  One way is to simply copy over the installation directory on to the DeepRacer, source it, and launch it.  The other is to load a docker container.
 
-If you just want to copy over the installation directory, then type this into the terminal
+You can copy over the installation directory with the following command.
 
 ```bash
 rcp -rp deepracer_ws/install deepracer@$DEEPRACER_IP:/opt/deepracer_ws
@@ -29,7 +29,7 @@ rsync --progress -r deepracer_ws/install deepracer@$DEEPRACER_IP:/opt/deepracer_
 
 Neat!
 
-I, however, would like to be able to also load ROS2 into my deepracer eventually. So I want to have docker on my DeepRacer.
+I, however, would like to be able to also load ROS2 into my DeepRacer eventually. So I want to have Docker on my DeepRacer.
 
 ## Docker on the DeepRacer
 
@@ -61,7 +61,7 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
 
-Next, add the `deepracer` user to the docker group so you don't have to run commands with sudo
+Next, add the `deepracer` user to the docker group so you don't have to run commands with `sudo`.
 
 ```bash
 sudo groupadd docker
@@ -86,11 +86,11 @@ Since I've included a deployment image in the `deepracer_ws`, let's build and ta
 docker build -f .deploycontainer/Dockerfile . -t deepracer_joy
 ```
 
-My deployment image _does_ use multi-stage, so you don't need to set up vscode or build it in another image in order to create the deployment image. You just need to have docker installed.
+My deployment image _does_ use multi-stage, so you don't need to set up VSCode or build it in another image to create the deployment image. You just need to build it with Docker.
 
 You could build the deployment image on the DeepRacer, but I prefer to do all compilation on my workstation.
 
-In order to facilitate transfer of the docker image between my workstation and the DeepRacer, I set up a local Docker repository.
+In order to transfer the docker image between my workstation and the DeepRacer, I set up a local Docker repository.
 
 ### Set up a local Docker repository
 
@@ -139,11 +139,11 @@ docker pull your_hostname.local:5000/deepracer_joy
 
 ## Setup your gamepad
 
-The steps to launch the gamepad controller on the DeepRacer are similar to the [previous article](/articles/3_aws_deepracer_joy.html).
+The steps for launching the gamepad controller on the DeepRacer are similar to the [previous article](/articles/3_aws_deepracer_joy.html).
 
 1. Find the device name of your joystick.
 
-    Plug in your gamepad wireless dongle.  I'm using an old school xbox 360 gamepad and receiver.  From what I hear, Ubuntu has gotten a lot better at supporting joystick devices, because I didn't need to install anything in order for the device to show up on the DeepRacer (even for a joystick this old!).
+    Plug in your gamepad wireless dongle.  I'm using an old school X-Box 360 gamepad and receiver.  From what I hear, Ubuntu has gotten a lot better at supporting joystick devices, because I didn't need to install anything in order for the device to show up on the DeepRacer (even for a joystick this old!).
 
     See if your joystick mounted as a device:
 
@@ -170,7 +170,7 @@ The steps to launch the gamepad controller on the DeepRacer are similar to the [
     roslaunch deepracer_joy deepracer_joy.launch
     ```
 
-    You should see the deepracer joy launch successfully
+    You should see `deepracer_joy` launch successfully
 
     > Note: Mine always says that it can't connect to the device, but it is actually successful at connecting
     >

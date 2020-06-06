@@ -4,29 +4,28 @@ title: Bridging ROS and ROS2
 category: Robotics
 tags: [ros, ros2]
 ---
-When I started writing about how to run the [ros1_bridge on the DeepRacer](/articles/5_aws_deepracer_ros1_bridge.html), I realized that bridging a ROS and ROS2 workspace required it's own post.
 
-Running the ros1_bridge in a custom environment was tricky, and required me to make a patch to complete.  Here's what I learned:
+Running the `ros1_bridge` in a custom environment is tricky, and required me to make a patch to complete.  Here's what I learned:
 
-1. The environment set up required to correctly build the ros1_bridge is very specific and requires manually setting (at least one) environment variable.
+1. The environment set up required to correctly build the `ros1_bridge` is very specific and requires manually setting (at least one) environment variable.
 2. This pain is necessary if you're not interested or can't port all of your packages.
 3. Topic support is much better than service support.
-4. Building in a docker has huge advantages since you can be explicit on the environment both in build time and run time.  I'm not sure it's possible to run ROS, ROS2 and the ROS1 bridge using the same environment.
+4. Building in a docker has huge advantages since you can be explicit on the environment both in build time and run time.  I'm not sure it's possible to run ROS, ROS2, and the bridge using the same environment.
 
-Here, I've outlined all of the steps I took to convert a message package from ROS to ROS2 and build the corresponding ros1_bridge to use it.
+Here, I've outlined all of the steps I took to convert a message package from ROS to ROS2 and build the corresponding `ros1_bridge` to use it.
 
 ## Port ROS messages to ROS2
 
-Before we can bridge anything, we'll need to make sure we have ROS and ROS2 versions of any message we'd like to bridge.  The minimal set of things you'll _need_ to change to run your ROS messages in ROS2 is the following:
+Before we can bridge anything, we'll need to make sure we have ROS and ROS2 versions of any message we'd like to bridge.  The minimal set of things you'll _need_ to change in order to run your ROS messages in ROS2 is the following:
 
 * CMakeLists.txt
 * package.xml
 
 ### CMakeLists.txt
 
-ROS2 uses a different build system than ROS, so you'll need to change the CMakeLists.txt file to the new build system, which requires changing some of the CMake macros that were used in ROS.
+ROS2 uses a different build system than ROS, so you'll need to change the CMakeLists.txt file to the new build system, which changes some of the CMake macros that were used in ROS.
 
-I've annotated the following CMakeLists.txt file with explanations. on each component.
+I've annotated a CMakeLists.txt file I converted with explanations. on each component.
 
 This is the original file:
 
@@ -34,7 +33,7 @@ This is the original file:
 cmake_minimum_required(VERSION 2.8.3)
 project(ctrl_pkg)
 
-# Get the information about this package's build-time dependencies
+# Get the information about this package's build time dependencies
 find_package(catkin REQUIRED
     COMPONENTS message_generation std_msgs)
 
@@ -51,7 +50,7 @@ add_service_files(FILES
     NavThrottleSrv.srv
 )
 
-# Generate the language-specific message and service files
+# Actually generate the language-specific message and service files
 generate_messages(DEPENDENCIES std_msgs)
 
 # Declare that this catkin package's runtime dependencies
@@ -60,11 +59,12 @@ catkin_package(
 )
 ```
 
-The ROS2 version:
+This is the ROS2 version:
 
 ```cmake
 # Update the cmake version to 3.5
 cmake_minimum_required(VERSION 3.5)
+# cmake_minimum_required(VERSION 2.8.3)
 
 project(ctrl_pkg)
 
@@ -75,15 +75,17 @@ endif()
 
 # Remove the catkin dependency and add ament_cmake
 find_package(ament_cmake REQUIRED)
-
+# find_package(catkin REQUIRED
+#    COMPONENTS message_generation std_msgs)
+#
 # You specify the individual packages that are required for building like this:
 find_package(builtin_interfaces REQUIRED)
 # Instead of REQUIRED_COMPONENTS std_msgs
 find_package(rosidl_default_generators REQUIRED)
 # Instead of REQUIRED_COMPONENTS message_generation
 
-# Change message files declaration to a cmake variable instead of the ROS add_message_files(...) custom macro.
-# You will need to include the name of the folder, since it's no longer implied.
+# Change message files declaration to a CMake variable instead of the ROS add_message_files(...) custom macro.
+# You will need to include the name of the folder since it's no longer implied.
 set(msg_files
    "msg/ServoCtrlMsg.msg"
 )
@@ -91,7 +93,7 @@ set(msg_files
 #     ServoCtrlMsg.msg
 # )
 
-# Change service files declaration to a cmake variable instead of a the ROS add_service_files(...) custom macro.
+# Change service files declaration to a CMake variable instead of the ROS add_service_files(...) custom macro.
 # You will need to include the name of the folder here too.
 set(srv_files
    "srv/ActiveStateSrv.srv"
@@ -168,6 +170,7 @@ And this is what it looks like when it's been updated to ROS2.
 <?xml version="1.0"?>
 <!-- update to format 3 -->
 <package format="3">
+<!-- <package format="2"> -->
   <name>ctrl_pkg</name>
   <version>0.0.0</version>
   <description>
@@ -178,25 +181,27 @@ And this is what it looks like when it's been updated to ROS2.
 
   <!-- change the buildtool from catkin to ament_cmake -->
   <buildtool_depend>ament_cmake</buildtool_depend>
-
-  <!-- these were dependencies in the original package, and not needed for the messages -->
-  <!-- <build_depend>rospy</build_depend> -->
-  <!-- <build_depend>roscpp</build_depend> -->
+  <!-- <buildtool_depend>catkin</buildtool_depend> -->
 
   <!-- use rosidl_default_generators instead of message_generation -->
   <!-- this time, it's a buildtool instead of a dependency -->
   <buildtool_depend>rosidl_default_generators</buildtool_depend>
+  <!-- <build_depend>message_generation</build_depend> -->
 
   <!-- use builtin_interfaces instead of std_msgs -->
   <build_depend>builtin_interfaces</build_depend>
+  <!--  <build_depend>std_msgs</build_depend> -->
 
-  <!-- remove unneeded deps -->
+  <!-- ignore unneeded deps -->
+  <!-- <exec_depend>rospy</exec_depend> -->
+  <!-- <exec_depend>roscpp</exec_depend> -->
   
-<!-- use builtin_interfaces instead of std_msgs -->
   <exec_depend>builtin_interfaces</exec_depend>
+  <!-- <exec_depend>std_msgs</exec_depend>-->
 
   <!-- use rosidl_default_runtime instead of message_runtime -->
   <exec_depend>rosidl_default_runtime</exec_depend>
+  <!-- <exec_depend>message_runtime</exec_depend> -->
 
   <!-- add to the rosidl_interface_packages group-->
   <member_of_group>rosidl_interface_packages</member_of_group>
@@ -211,7 +216,7 @@ And this is what it looks like when it's been updated to ROS2.
 
 ### Update variable names
 
-ROS2 has much stricter linting rules compared to ROS.  CamelCase variables are no longer allowed inside messages or services.  As a result, I needed to rename quite a few variables from the original ROS packages when I made the ROS2 versions.
+ROS2 has much more strict linting rules than ROS.  CamelCase variables are no longer allowed inside messages or services.  As a result, I needed to re-name quite a few variables from the original ROS packages when I made the ROS2 versions.
 
 Example:
 
@@ -268,7 +273,7 @@ Example service mapping:
 
 ## Build the bridge
 
-As I mentioned previously, using Docker for the bridge is advantageous for being able to fully specify the build and run environments for the `ros1_bridge`.  I'll be walking through the creation of a [multi-stage dockerfile](https://docs.docker.com/develop/develop-images/multistage-build/) that will handle building all of the environments; and finally creating a run-time image from it.
+As I mentioned previously, using docker for the bridge is advantageous for being able to fully specify the build and run environments for the `ros1_bridge`.  I'll be walking through the creation of a [multi-stage dockerfile](https://docs.docker.com/develop/develop-images/multistage-build/) that will handle building all of the environments and finally creating a run time image from it.
 
 Let's start setting up our ros1_bridge docker image!
 
@@ -278,7 +283,7 @@ I'll be using the [aws_deepracer_msgs](https://github.com/athackst/aws_deepracer
 
 Since we're talking about a custom package, I'm going to assume that this package is one that you know how to compile in your local workspace.
 
-Start a docker image that builds your ROS messages
+Start a docker image that builds your ros messages
 
 ```docker
 FROM athackst/ros:melodic-dev as ros_builder
@@ -291,15 +296,15 @@ RUN mkdir -p src && cd src \
  && catkin_make install -DCMAKE_INSTALL_PREFIX=/opt/ros/melodic
 ```
 
-I'm using my development melodic image, which includes just the basic ROS packages and build tools.  Be sure to install any dependencies for your package.  You'll need to repeat this installation in the ros1_bridge image, so you might want to install them using a script.
+I'm using my development melodic image, which includes just the basic ros packages as well as required build tools.  Be sure to install any dependencies your packages require.  You'll need to repeat these dependencies in the ros1_bridge image, so you might want to install them by using a script.
 
 > Note: I chose melodic so that the base operating system would match my desired destination ros2 version of eloquent.
 
-I've chosen to install my packages in the `/opt/ros/melodic` directory.  This makes it easier to copy and source in the resulting `ros1_bridge` image.  If you choose to put the ROS install directory somewhere else, you'll need to add additional environment variables for that workspace in the `ros1_bridge` image.
+I've chosen to install my packages in to the `/opt/ros/melodic` directory.  This makes it easier to copy and source in the resulting `ros1_bridge` image.  If you choose to put the ros install directory somewhere else, you'll need to add additional environment variables for that workspace in the `ros1_bridge` image.
 
 ### Build the ROS2 messages
 
-Next, we'll want to build the ROS2 messages using a multi-stage dockerfile this can easily be done by starting a new image with `FROM` in the same file.
+Next we'll want to build the ROS2 messages, using a multi-stage dockerfile this can easily be done by starting a new image with `FROM` in the same file.
 
 ```docker
 FROM athackst/ros2:eloquent-dev as ros2_builder
@@ -336,7 +341,7 @@ COPY --from=ros_builder /opt/ros/melodic /opt/ros/melodic
 # Get the ros2 messages
 COPY --from=ros2_builder /opt/ros/eloquent/ /opt/ros/eloquent
 
-# Install dependencies for the bridge
+# Deps for the bridge
 RUN apt-get update && apt-get install -y \
   # Test deps
   ros-eloquent-demo-nodes-cpp \
@@ -381,11 +386,11 @@ RUN mkdir -p src && cd src \
 
 ```
 
-> Note: I had to patch the ros1_bridge to correctly handle mapped services. [#241](https://github.com/ros2/ros1_bridge/pull/241)
+> Note, I had to patch the ros1_bridge to correctly handle mapped services. [#241](https://github.com/ros2/ros1_bridge/pull/241)
 
 ### Run the ros1_bridge
 
-Next, create the final run-time image.
+Next, create the final run time image.
 
 ```docker
 FROM athackst/ros2:eloquent-base
@@ -397,13 +402,13 @@ RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main"
   && apt-get install -y ros-melodic-ros-base \
   && rm -rf /var/lib/apt/lists/*
 
-# Copy the ROS outputs
+# Copy the ros outputs
 COPY --from=ros1_bridge_builder /opt/ros/melodic /opt/ros/melodic
 
 # Copy the ros2 outputs
 COPY --from=ros1_bridge_builder /opt/ros/eloquent/ /opt/ros/eloquent
 
-# Install dependencies for the bridge
+# Deps for the bridge
 RUN apt-get update && apt-get install -y \
   # Test deps
   ros-eloquent-demo-nodes-cpp \

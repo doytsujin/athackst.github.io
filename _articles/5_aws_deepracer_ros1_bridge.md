@@ -8,38 +8,38 @@ tags: [deepracer, ros2]
 
 ## Interfacing with ROS2
 
-At one point I thought that I would do all new development in the next generation of OSRF software (so [ROS2](https://index.ros.org/doc/ros2/) and [Ignition](https://ignitionrobotics.org/home)).  Porting the DeepRacer to use ROS2 may be an exercise in futility, but I thought it might be fun to find out just how painful it is to run a mixed ROS/ROS2 environment.
+At one point I thought that I would do all new development in the next generation of OSRF software ([ROS2](https://index.ros.org/doc/ros2/) and [Ignition](https://ignitionrobotics.org/home)).  Porting the DeepRacer to use ROS2 may be an exercise in futility, but I thought it might be fun to find out just how painful it is to run a mixed ROS/ROS2 environment.
 
 I was not disappointed (it's super painful).
 
-Below are the steps to successfully use the DeepRacer with ROS2.
+Below describes how to successfully use the DeepRacer with ROS2.
 
 ## How to interface with the DeepRacer
 
-So what does it actually take to use ROS2 with the DeepRacer?
+So what does it take to use ROS2 with the DeepRacer?
 
-The DeepRacer currently runs [ros kinetic](http://wiki.ros.org/kinetic) with a stack of proprietary software developed by AWS.  So, unlike other porting efforts, the base software stack can't be changed.  However, we can build and run ROS2 applications on top of ROS 1, so long as we bridge the communication between those two APIs.
+The DeepRacer currently runs [ROS Kinetic](http://wiki.ros.org/kinetic) with a stack of proprietary software developed by AWS.  So, unlike other porting efforts, the base software stack can't be changed.  However, we can build and run ROS2 applications on top of ROS 1, so long as we bridge the communication between those two APIs.
 
-You can bridge these two networks with a package called [ros1_bridge](https://github.com/ros2/ros1_bridge). At the time of this writing, the [ros1_bridge](https://github.com/ros2/ros1_bridge) does not support dynamic binding.  We therefore must compile the ros1_bridge with all of the message types we need for the DeepRacer.  Since the DeepRacer has [quite a few](/articles/3_aws_deepracer_joy.html#deepracer-ros-messages) custom messages, we will need to have those messages compiled in both ROS1 and ROS2 in order for the ros1_bridge to be able to bind to them.
+You can bridge these two networks with a package called [ros1_bridge](https://github.com/ros2/ros1_bridge). At the time of this writing, the [ros1_bridge](https://github.com/ros2/ros1_bridge) does not support dynamic binding.  We must, therefore, compile the ros1_bridge with all of the message types we need for the DeepRacer.  Since the DeepRacer has [quite a few](/articles/3_aws_deepracer_joy.html#deepracer-ros-messages) custom messages, we will need to have those messages compiled in both ROS and ROS2 for the ros1_bridge to be able to bind to them.
 
-The first thing you'll realize when you try to build the ros1_bridge is that it requires a very specific environment.  This makes it tricky to setup correctly, especially for novices, or those just not as familiar with ROS1 and ROS2.  I've taken the liberty of providing this setup inside of a [docker container](https://github.com/athackst/deepracer_ws/tree/articles/deepracer_ros2_bridge) for your convenience.
+The first thing you'll realize when you try to build the ros1_bridge is that it requires a very specific environment.  This makes it tricky to set up correctly, especially for novices, or those just not as familiar with ROS and ROS2.  I've taken the liberty of providing this setup inside of a [docker container](https://github.com/athackst/deepracer_ws/tree/articles/deepracer_ros2_bridge) for your convenience.
 
 The general order of operations for custom message types is:
 
-1. Get the base (ros1) version of the messages
+1. Get the base (ROS) version of the messages
    * If you need custom messages, compile them in a local workspace.
-   * Be sure that only the ros1 environment has been sourced.
-2. In a separate terminal (environment) get the new (ros2) version of the messages.
-   * If you need a custom ros2 message, compile them in a local workspace.
-   * Be sure that only the ros2 environment has been sourced.
-3. In  separate terminal (environment)
-   * Source the base ros1 version.
-   * Source the local ros1 workspace.
-   * Source the base ros2 version.
-   * Source the local ros2 workspace.
+   * Be sure that only the ROS environment has been sourced.
+2. In a separate terminal (environment) get the new (ROS2) version of the messages.
+   * If you need a custom ROS2 message, compile them in a local workspace.
+   * Be sure that only the ROS2 environment has been sourced.
+3. In a separate terminal (environment)
+   * Source the base ROS version.
+   * Source the local ROS workspace.
+   * Source the base ROS2 version.
+   * Source the local ROS2 workspace.
    * Build the catkin environment.
 
-### Make the ROS1 messages
+### Make the ROS messages
 
 This is probably the easiest part of the process, but it's not without some gotchas.  First, the version of ROS that runs on the robot is on a different OS than the latest ROS2 version.  This means that we will need to compile the DeepRacer messages, which work on Kinetic with a later version of ROS, like Melodic.
 
@@ -53,7 +53,7 @@ You can check out the branch [articles/deepracer_ros2_bridge](https://github.com
 git clone --branch articles/deepracer_ros2_bridge --recurse-submodules git@github.com:athackst/deepracer_ws.git
 ```
 
-Now, build the ROS1 workspace
+Now, build the ROS workspace
 
 ```bash
 source /opt/ros/melodic/setup.bash
@@ -62,7 +62,7 @@ source /opt/ros/melodic/setup.bash
 
 Let's delve a little into this command:
 
-* `-C ros_ws` : set "ros_ws" as the workspace directory for the ros1 messages you want to compile.
+* `-C ros_ws` : set "ros_ws" as the workspace directory for the ROS messages you want to compile.
 * `--only-pkg-with-deps aws_deepracer_msgs` : Only build the "aws_deepracer_msgs" package
 * `-DCMAKE_INSTALL_PREFIX` : location to place the compiled sources.  I'm setting this to be in a different location than the default since we're compiling against a different version of ROS1.
 
@@ -70,15 +70,15 @@ Let's delve a little into this command:
 
 Next, you're going to want to create the ROS2 version of all the messages.  I've already done this for the DeepRacer in the [eloquent branch](https://github.com/athackst/aws_deepracer_msgs/tree/eloquent) of the [aws_deepracer_msgs](https://github.com/athackst/aws_deepracer_msgs) repo.
 
-Check out my article on [bridging ros and ros2](/articles/bridging_ros_ros2.html) for more information on how I ported the messages.
+Check out my article on [bridging ROS and ROS2](/articles/bridging_ros_ros2.html) for more information on how I ported the messages.
 
-I found the ROS2 is much more strict when it comes to naming conventions than ROS1.  This created some differences between the names of elements in the ROS1 message verses the names of elements in the ROS2 message.  Notably, ROS2 enforces that all elements within the message adhere to the `underscore_style`.
+I found the ROS2 is much more strict when it comes to naming conventions than ROS.  This created some differences between the names of elements in the ROS message verses the names of elements in the ROS2 message.  Notably, ROS2 enforces that all elements within the message adhere to the `underscore_style`.
 
-This necessitated the creation of rules files for all of the messages.  A `mapping_rules` file tells the `ros1_bridge` how to map from ros1 messages to ros2 messages.
+This necessitated the creation of rules files for all of the messages.  A `mapping_rules` file tells the `ros1_bridge` how to map from ROS messages to ROS2 messages.
 
 > Note: You will need to use [my fork of the ros1_bridge](https://github.com/athackst/ros1_bridge) at the time of this writing because I had to modify the upstream repository to properly handle services.
 
-Since I've already ported the [aws_deepracer_msgs](https://github.com/athackst/aws_deepracer_msgs/tree/eloquent) to [eloquent](https://index.ros.org/doc/ros2/Releases/Release-Eloquent-Elusor/), we just need to compile these in the ros eloquent environment.
+Since I've already ported the [aws_deepracer_msgs](https://github.com/athackst/aws_deepracer_msgs/tree/eloquent) to [ROS2 Eloquent](https://index.ros.org/doc/ros2/Releases/Release-Eloquent-Elusor/), we just need to compile these in the ROS Eloquent environment.
 
 If you're following along using by workspace (the [articles/deepracer_ros2_bridge](https://github.com/athackst/deepracer_ws/tree/articles/deepracer_ros2_bridge) branch in my [deepracer_ws](https://github.com/athackst/deepracer_ws/) repo) then you can build the space with:
 
@@ -89,18 +89,18 @@ colcon build --base-paths ros2_ws --merge-install --install-base ro1_bridge/eloq
 
 Let's break this command down:
 
-* `--base-paths` : directory to search for source packages
+* `--base-paths` : directory to search for source packages.
 * `--merge-install` : Use the "--install-base" as the install prefix for all packages instead of a package specific subdirectory in the install base.  This will make it easier to refer to this directory in the environment for inclusion in the ros1_bridge.
 * `--install-base` : The location to put the compiled outputs.
 * `--packages-select aws_deepracer_msgs` : The package to compile.  Note that we're using the "eloquent" branch of this package.
 
 ### Set up the ROS Bridge
 
-Now that we have both our ROS1 messages and ROS2 messages compiled, we can build the ros1_bridge!
+Now that we have both our ROS messages and ROS2 messages compiled, we can build the `ros1_bridge`!
 
-The first thing you'll need to do is _carefully_, very _carefully_ set up your environment in order for the ros1_bridge to be able to find and link between the two workspaces.
+The first thing you'll need to do is _carefully_ (very _carefully_) set up the environment for the `ros1_bridge` to be able to find and link the two workspaces.
 
-In essence, you want to source the ROS1 spaces, then the ROS2 spaces. Except for the CMAKE_PREFIX_PATH since the ros1_bridge uses the cmake prefix to point to ROS2, and uses the ROS_PACKAGE_PATH to find the ROS1 spaces.
+In essence, you want to source the ROS spaces, then the ROS2 spaces. Except for the CMAKE_PREFIX_PATH since the `ros1_bridge` uses the cmake prefix to point to ROS2, and uses the ROS_PACKAGE_PATH to find the ROS spaces.
 
 ```bash
 source ros1_bridge/melodic/setup.bash
@@ -142,7 +142,7 @@ The breakdown:
 * `--packages-select ros1_bridge` : Build just the ros1_bridge
 * `--cmake-force-configure` : Force cmake to run the configure step
 
-If everything went well, there should be a mapping between the ros1 and ros2 message and service types.
+If everything went well, there should be a mapping between the ROS1 and ROS2 message and service types.
 
 You can check this by running the following:
 
@@ -315,7 +315,7 @@ Supported ROS 2 <=> ROS 1 service type conversion pairs:
 
 ## Run the ros1_bridge on the DeepRacer
 
-The final step is, of course, to run the ros1_bridge dockerfile on the DeepRacer and communicate with it over ROS2.
+The final step is, of course, to run the `ros1_bridge` dockerfile on the DeepRacer and communicate with it over ROS2.
 
 ### Set up a docker image
 

@@ -6,27 +6,26 @@ layout: default
   {{ content }}
 
   {% for article in site.articles %}
-  {% for tag in article.tags %}
-  {% comment %}---> Only compare if article is
-  not same as current page {% endcomment %}
-  {% if article.url != page.url %}
-  {% if page.tags contains tag %}
-  {% capture relatedPage %} <li><a href="{{ article.url }}">{{article.title}}</a></li> {% endcapture %}
-  {% unless relatedArticles contains relatedPage %}
-  {% assign relatedArticles = relatedArticles | append: relatedPage %}
-  {% endunless %}
-  {% endif %}
-  {% endif %}
-  {% endfor %}
+    {% for tag in article.tags %}
+      {% comment %}---> Only compare if article is 
+                        not same as current page {% endcomment %}
+      {% if article.url != page.url %}
+        {% if page.tags contains tag %}
+          {% capture relatedPage %} <li><a href="{{ article.url }}">{{article.title}}</a></li> {% endcapture %}
+          {% unless relatedArticles contains relatedPage %}
+            {% assign relatedArticles = relatedArticles | append: relatedPage %}
+          {% endunless %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
   {% endfor %}
 
   {% if relatedArticles.size > 0 %}
   <h3>See also</h3>
   <ul>
     {% for relatedPage in relatedArticles %}
-    {{ relatedPage }}
+      {{ relatedPage }}
     {% endfor %}
   </ul>
   {% endif %}
-
 </div>

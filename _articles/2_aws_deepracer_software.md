@@ -6,38 +6,38 @@ series: DeepRacer
 tags: deepracer
 ---
 
-So you've gotten a deep racer and you want to learn more about the software that's on it.
+So you have a deep racer and you want to learn more about the software that's on it, read on!
 
 ## ROS Kinetic
 
 ![ros kinetic](/assets/img/kinetic.png#left)
 
-At the time of this writing, the Deep Racer runs ROS Kinetic.  The Robot Operating System (ROS) isn't really an operating system, it's more like a software development kid (SDK).  It's comprised of a set of software libraries and tools that help you build robot applications. It's a staple in a lot of university programs on robotics and it is easy to add new algorithms or packages and share them with the world.  Best of all, it's all open source.
+At the time of this writing, the DeepRacer runs ROS Kinetic.  The Robot Operating System (ROS) isn't really an operating system, it's more like a software development kit (SDK).  It's comprised of a set of software libraries and tools that help you build robot applications. It's a staple in a lot of university programs in Robotics and it is easy to add new packages to share with the world.  Best of all, it's all open source.
 
-ROS Kinetic is the long term support (LTS) version of ROS that works with Ubuntu Xenial 16.04.  It's support ends April 2021, so I hope that Amazon is planning on releasing an update!
+ROS Kinetic is the long term support (LTS) version of ROS that works with Ubuntu Xenial 16.04.  Its support ends in April 2021, so I hope that Amazon is planning on releasing an update!
 
 ## Setting up the DeepRacer
 
-The first thing you'll do when setting up your DeepRacer is to connect it to your computer so you can set up it's wifi.  You should begin by following the [setup instructions](https://aws.amazon.com/deepracer/getting-started/).
+The first thing you'll do when setting up your DeepRacer is to connect it to your computer so you can set up its wifi.  You should begin by following the [setup instructions](https://aws.amazon.com/deepracer/getting-started/).
 
 After the wifi network has been set up, you can reconnect to the DeepRacer via your browser.  Just type in the IP address of your deep racer into your browser and you'll be presented with the vehicle control and settings.
 
-In order to interface with ROS instead of using the web console, you'll need to enable SSH.  Inside the DeepRacer console, click on settings then SSH.
+To interface with ROS instead of using the web console, you'll need to enable SSH.  Inside the DeepRacer console, click on settings then SSH.
 
 ![deepracer ssh](/assets/img/aws_deepracer_settings.png)
 
-Go ahead and click "enable" and set up your ssh password.
+Go ahead and click "enable" and set up your SSH password.
 
-> Note that the default username is deepracer.
+> Note that the default username is DeepRacer.
 
 After you've enabled SSH, you can now log into your deep racer from the terminal.
 
 ```bash
-export DEEPRACER_IP=<the ip address>
+export DEEPRACER_IP=<the IP address>
 ssh deepracer@$DEEPRACER_IP
 ```
 
-When it asks you for a password, enter the one you created in the webpage.
+When it asks you for a password, enter the one you created on the webpage.
 
 > Note: this password is different from the default password to log into the DeepRacer console webpage.
 
@@ -45,7 +45,7 @@ Now you can start exploring the software that's running
 
 ## Exploring the software
 
-The first thing I did was to find where all the software was.  Since ROS by default is installed into the `/opt` directory, that's the first place I went.
+The first thing I did was to find where all the software was.  Since ROS is normally installed into the `/opt` directory, that's the first place I looked.
 
 ```bash
 deepracer@amss-hd4i:~$ cd /opt
@@ -53,7 +53,7 @@ deepracer@amss-hd4i:/opt$ ls
 aws  ros
 ```
 
-As you can see, we have the base ros installation in `ros` and a custom `aws` folder.  Let's see what's in there!
+As you can see, we have the base ROS installation in `ros` and a custom `aws` folder.  Let's see what's in there!
 
 ```bash
 deepracer@amss-hd4i:/opt$ cd aws/
@@ -67,7 +67,7 @@ calibration.json     lib              setup.sh        software_update_status.jso
 camera               nginx            _setup_util.py  start_ros.sh
 ```
 
-As you can see, there's a suspiciously titled `start_ros.sh` script that probably tells us a whole lot about how the software is started.  The contents of this file are:
+There's a suspiciously titled `start_ros.sh` script in this directory that probably tells us a whole lot about how the software is started.  The contents of this file are:
 
 ```bash
 source /opt/ros/kinetic/setup.bash
@@ -82,12 +82,12 @@ Here, we can see that this file:
 1. Sources the ROS Kinetic installation
 2. Sources the AWS DeepRacer installation
 3. Sets up the inference engine
-4. Sets up usb devices so they can be accessed through python
+4. Sets up USB devices so they can be accessed through python
 5. Launches the software suite.
 
-After sourcing the kinetic and deepracer installations, we can now run ROS commands.
+After sourcing the Kinetic and DeepRacer installations, we can now run DeepRacer ROS commands.
 
-There are a couple of commands that let you introspect the ROS software system.  The first we are going to use is `rosnode list`.  This will tell us all of the ROS programs that are running.
+There are a couple of commands that let you introspect the ROS software system.  The first we are going to use is the `rosnode list` command.  This command will print all of the ROS programs that are running.
 
 ```bash
 deepracer@amss-hd4i:/opt/aws/deepracer$ rosnode list
@@ -106,17 +106,17 @@ deepracer@amss-hd4i:/opt/aws/deepracer$ rosnode list
 
 Since there isn't any documentation on the ROS nodes running, I'm going to guess at their function.  
 
-* battery_node : A battery monitoring process
-* control_node : The interface to the robot drive train that incorporates calibration
-* inference_engine : ML inference engine for controlling the bot
-* media_engine : Publishes camera data
-* model_optimizer : Loads/compresses your model for the inference engine
-* navigation_node : Appears to be inference to control command converter
-* rosout : default ros status
-* servo_node : Low level servo controller
-* software_update : Update software/ml model
-* web_video_server : Compress the video stream and serve it on a port
-* webserver : Serve the webpage for the robot
+* battery_node: A battery monitoring process
+* control_node: The interface to the robot drive train that incorporates calibration
+* inference_engine: ML inference engine for controlling the bot
+* media_engine: Publishes camera data
+* model_optimizer: Loads/compresses your model for the inference engine
+* navigation_node: Appears to be the inference to control command converter
+* rosout: default ROS system status
+* servo_node: Low-level servo controller
+* software_update: Update software/ml model
+* web_video_server: Compress the video stream and serve it on a port
+* webserver: Serve the webpage for the robot
 
 If you want to learn more about any particular node, just enter `rosnode info <node_name>`
 
@@ -153,7 +153,7 @@ Connections:
     * transport: TCPROS
 ```
 
-You can see that it publishes two topics -- `/auto_drive` which is of type `ctrl_pkg/ServoCtrlMsg` and `/rosout` which is the default ros logging topic of type `rosgraph_msgs/Log`.  It also subscribes to one topic -- `/rl_results` which is reporting an `unknown type`.  ROS will sometimes report topic types as `unknown` when no module is publishing them.  
+You can see that it publishes two topics -- `/auto_drive` which is of type `ctrl_pkg/ServoCtrlMsg` and `/rosout` which is the default ROS logging topic of type `rosgraph_msgs/Log`.  It also subscribes to one topic -- `/rl_results` which is reporting an `unknown type`.  ROS will sometimes report topic types as `unknown` when no module is publishing them.  
 
 If you want to know more about that topic, you can use `rostopic info`.
 
@@ -167,7 +167,7 @@ Subscribers:
  * /navigation_node (http://amss-hd4i:38873/)
 ```
 
- Which tells us the type is actually `inference_pkg/InferResultsArray` and that no one is currently publishing to the topic, although the `navigation_node` is subscribed to it.
+ This tells us the type is actually `inference_pkg/InferResultsArray` and that no one is currently publishing to the topic, although the `navigation_node` is subscribed to it.
 
  If you want to know more about the message, you can use `rosmsg show` to see the message format
 
@@ -195,7 +195,7 @@ sensor_msgs/Image img
 
  The `navigation_node` also lists the services which (other than logging) are `/load_action_space` and `/navigation_throttle`.
 
- Services, like topics, allow you to find out more information. But this time you'll need to use `rosservice info`
+ Services, like topics, allow you to find out more information. But this time you'll need to use the command `rosservice info`
 
 ```bash
 deepracer@amss-hd4i:/opt/aws/deepracer$ rosservice info /load_action_space
@@ -205,7 +205,7 @@ Type: inference_pkg/LoadModelSrv
 Args: artifactPath taskType preProcessType
 ```
 
-And also like topics, you can find more about the message format of a service by using `rossrv show`
+And also, like topics you can query the message format for a service using `rossrv show`
 
 ```bash
 deepracer@amss-hd4i:/opt/aws/deepracer$ rossrv show inference_pkg/LoadModelSrv
@@ -218,7 +218,7 @@ int32 error
 
 ## Connecting to another computer
 
-One of the biggest advantages of ROS is being able to connect to other computers on your network.  To do this, you will need to ROS on your computer, or you can use my [docker image](https://hub.docker.com/repository/docker/athackst/ros) to get started quickly.  
+One of the biggest advantages of ROS is being able to connect to other computers on your network.  To do this, you will need ROS installed on the other computer, or you can use my [docker image](https://hub.docker.com/repository/docker/athackst/ros) to get started quickly.  
 
 But since ROS uses _ephemeral_ ports to connect nodes, you'll need to first disable the firewall on the DeepRacer with the following command:
 
@@ -226,15 +226,15 @@ But since ROS uses _ephemeral_ ports to connect nodes, you'll need to first disa
 deepracer@amss-hd4i:/opt/aws/deepracer$ sudo ufw disable
 ```
 
-> Note the password for sudo is the same as your SSH password
+> Note the password for `sudo` is the same as your SSH password
 
-Now on your computer you can run my docker image with the following command:
+Now on your computer, run my docker image with the following command:
 
 ```bash
 docker run --network=host -it athackst/ros:kinetic-dev bash
 ```
 
-This starts my docker image in interactive terminal and shares your network with the image.  You'll want to share your network with the image for the same reason you needed to disable the firewall.
+This starts my docker image in an interactive terminal and shares your network with the image.  You'll want to share your network with the image for the same reason you needed to disable the firewall.
 
 Now all you need to do is set the ROS_MASTER_URI to your DeepRacer.  This is done simply through an environment variable.
 
@@ -242,7 +242,7 @@ Now all you need to do is set the ROS_MASTER_URI to your DeepRacer.  This is don
 root@x1-carbon:/$ export ROS_MASTER_URI=http://$DEEPRACER_IP:11311
 ```
 
-Don't forget to add the `11311` for the port the rosmaster host is listening to!
+Don't forget to add the `11311` for the port the `rosmaster` host is listening to!
 
 Once the ROS master has been set, you can do things like list, echo, and publish to topics to control your DeepRacer.
 

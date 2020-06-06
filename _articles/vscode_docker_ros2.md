@@ -5,31 +5,31 @@ category: Software Development
 tags: [vscode, docker, ros2]
 ---
 
-I started out playing with ROS2 using a docker container.  It was a fast and easy way for me to try out ROS2.  As an avid user of ROS, I naturally wanted to keep up with the new changes being made.  However, it can be difficult to set up, especially for new users.  This guide is intended to be used by people that are familiar with coding and software development, but maybe not ROS.
+I started out playing with ROS2 by using a docker container.  It was a fast and easy way for me to try out ROS2.  As an avid user of ROS, I naturally wanted to keep up with the new changes being made.  However, it can be difficult to set up, especially for new users.  This guide is intended to be used by people that are familiar with coding and software development, but maybe not ROS.
 
 ## What is ROS2
 
-ROS2 is the next generation of software libraries for robotics development.  Even though ROS stands for Robot Operating System, it's not an operating system like Windows or Ubuntu, instead, it acts as a software development kit for robotics.
+ROS2 is the next generation of software libraries for robotics development.  Even though ROS stands for Robot Operating System, it's not an operating system like Windows or Ubuntu, instead it is acts as an software development kit for robotics.
 
 ## VSCode and Docker
 
 First, I'm going to assume you already have [vscode](https://code.visualstudio.com/) and [docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/) installed.  If not, check out my installation instructions [here](/articles/docker_development.html).
 
-Ok, so now that you have docker and VSCode installed, let's add some [ros2](https://index.ros.org/doc/ros2/)!
+Ok, so now that you have docker and vscode installed, let's add some [ros2](https://index.ros.org/doc/ros2/)!
 
 ## Adding ROS2
 
-You will need to add both the base ROS libraries and the development packages to develop in ROS2.  I keep an updated version of ROS2 packages on [dockerhub](https://hub.docker.com/repository/docker/athackst/ros2).  I maintain both a base version and a development version of the docker container.
+You will need to add both the base ROS libraries and the development packages in order to develop in ROS2.  I keep an updated version of ROS2 packages on [dockerhub](https://hub.docker.com/repository/docker/athackst/ros2).  I maintain both a base version and a development version of the docker container.
 
 Why two?
 
-The base version has the minimal dependencies needed to run ROS2.  You can use this image for code you want to deploy, but don't want or need the ability to write new code.  The development version is based on the minimal docker image and adds all the dependencies you need to compile and create new packages.
+The base version has the minimal dependencies needed to run ROS2.  You  can use this image for code you want to deploy, but don't want or need the ability to write new code.  The development version is based on the base version, and adds all the dependencies you need to compile and create new packages.
 
 ### Folder structure
 
 For the following files, I will assume you have the following folder structure.  This structure is very typical for ROS2/vscode development.  
 
-The upper-level directory is the folder you open in VSCode.  It contains the special folders `.devcontainer` and `.vscode` which VSCode uses to load your workspace and preferences.  
+The upper level directory is the folder you open in vscode.  It contains the special folders `.devcontainer` and `.vscode` which vscode uses to load your workspace and preferences.  
 
 ROS2 code is located inside the src directory, organized as packages within folders.
 
@@ -45,7 +45,7 @@ ROS2 code is located inside the src directory, organized as packages within fold
 
 ### Make the docker file
 
-To use the docker container in VSCode, you will need to make a dockerfile and update it to install your dependencies.
+In order to use the docker container in VSCode, you will need to make a dockerfile and update it to install your own dependencies.
 
 For this reason, I decided to share this as a file, instead of posting it as a container on dockerhub.
 
@@ -77,15 +77,15 @@ RUN groupadd --gid $USER_GID $USERNAME \
     # Cleanup
     && rm -rf /var/lib/apt/lists/*
 
-# The entry point for the container to source the environment
+# The entrypoint for the container to source the environment
 COPY entrypoint.sh /setup/entrypoint.sh
 ENTRYPOINT [ "/setup/entrypoint.sh" ]
 
 ```
 
-### Set up the devcontainer.json file
+### Set up the devcontainer
 
-You'll need a devcontainer.json file for VSCode to know how to mount your docker container as a workspace.  I suggest using one like the following:
+You'll need a devcontainer file in order for vscode to know how to mount your docker container as a workspace.  I suggest using one like the following:
 
 ```javascript
 // See https://aka.ms/vscode-remote/devcontainer.json for format details.
@@ -134,7 +134,7 @@ The user name should match a non-root user inside your docker container.  VSCode
 
 #### runArgs
 
-These are the arguments you want to pass into the `docker run` command.  You can place any argument that is valid to use with [docker run](https://docs.docker.com/engine/reference/commandline/run/)
+These are the arguments you want to pass in to the `docker run` command.  You can place any argument that is valid to use with [docker run](https://docs.docker.com/engine/reference/commandline/run/)
 
 The ones I find the most useful are:
 
@@ -145,7 +145,7 @@ The ones I find the most useful are:
     "--security-opt", "seccomp=unconfined",
     ```
 
-* SSH credentials.  This will add [ssh credentials](https://code.visualstudio.com/docs/remote/containers#_using-ssh-keys) to your container without saving them inside the container.  This somewhat lengthy entry is cross-platform compatible, so you can use the same `devcontainer.json` on Linux and Windows.
+* SSH credentials.  This will add [ssh credentials](https://code.visualstudio.com/docs/remote/containers#_using-ssh-keys) to your container without saving them inside the container.  This somewhat lengthy entry is cross-platform compatible, so you can use the same devcontainer on linux and windows.
 
     ```javascript
     "-v", "${env:HOME}${env:USERPROFILE}/.ssh:/root .ssh-localhost:ro"
@@ -159,7 +159,7 @@ The ones I find the most useful are:
 
 #### extensions
 
-Extensions are VSCode plugins you'd like to have in the container.  By hosting them in the container, you can be sure that specific ones are installed and configured for everyone.
+Extension are vscode plugins you'd like to have in the container.  By hosting them in the container, you can be sure that specific ones are installed and configured for everyone.
 
 I like using the following extensions with ROS2.
 
