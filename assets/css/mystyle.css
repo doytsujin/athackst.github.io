@@ -1,6 +1,5 @@
 ﻿.page {
   margin: auto;
-  min-width: 910px;
 }
 
 h1 {
@@ -19,7 +18,7 @@ h2 {
   font-family: 'Oswald', sans-serif;
   font-weight: 300;
   font-size: 5vh;
-  color: #38761d;
+  color: #8a8a8a;
   text-decoration: none;
   text-transform: lowercase;
   letter-spacing: 0px;
@@ -136,7 +135,6 @@ ol {
     font-size: 3em;
   }
   ul.intro-social-buttons>li {
-    display: block;
     margin-bottom: 20px;
     padding: 0;
   }
@@ -171,7 +169,7 @@ nav ul {
 }
 
 nav ul li {
-  margin: 0 50px 0 0;
+  margin: 0 5vw 0 0;
   display: inline;
   list-style-type: none;
 }

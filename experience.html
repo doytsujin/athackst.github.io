@@ -18,7 +18,7 @@ title: Experience
         </a>
         {{ post.content }}
         {% elsif post.layout=='image_entry' %}
-        <img src="{{ post.image }}"  alt="{{ page.title }}" />
+        <img src="{{ post.image }}" alt="{{ page.title }}" />
         <h3>{{ post.title }}</h3>
         {{ post.content }}
         {% elsif post.layout=='text_entry' %}
@@ -27,8 +27,8 @@ title: Experience
         {% elsif post.layout=='video_entry' %}
         <h3>{{ post.title }}</h3>
         <div class="video-wrapper">
-          <iframe width="600" height="340" src="{{ post.video }}" frameborder="0" gesture="media" allow="encrypted-media"
-            allowfullscreen></iframe>
+          <iframe width="600" height="340" src="{{ post.video }}" frameborder="0" gesture="media"
+            allow="encrypted-media" allowfullscreen></iframe>
         </div>
         {{ post.content }}
         {% else %}
