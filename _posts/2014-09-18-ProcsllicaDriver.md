@@ -1,6 +1,6 @@
 ---
 layout: text_entry
-title: athackst/prosilica_driver
+title: athackst / prosilica_driver
 ---
 Check out the [nodelet version](https://github.com/athackst/prosilica_driver) of the prosilica driver I wrote!  
 

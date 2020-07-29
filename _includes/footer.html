@@ -1,9 +1,6 @@
 <footer>
   <span class="footer-text">
-    {% for item in site.data.navigation %}
-    | <a href="{{ item.url }}"> {{ item.title }}</a>
-    {% endfor %}
-    |
+    {% for item in site.data.navigation %}| <a href="{{ item.url }}"> {{ item.title }}</a> {% endfor %}|
   </span>
   <br />
   <div class="footer-copyright">
