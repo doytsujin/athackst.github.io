@@ -9,27 +9,27 @@ I started out playing with ROS2 by using a docker container.  It was a fast and 
 
 ## What is ROS2
 
-ROS2 is the next generation of software libraries for robotics development.  Even though ROS stands for Robot Operating System, it's not an operating system like Windows or Ubuntu, instead it is acts as an software development kit for robotics.
+ROS2 is the next generation of software libraries for robotics development.  Even though ROS stands for Robot Operating System, it's not an operating system like Windows or Ubuntu, instead, it acts as a software development kit for robotics.
 
 ## VSCode and Docker
 
 First, I'm going to assume you already have [vscode](https://code.visualstudio.com/) and [docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/) installed.  If not, check out my installation instructions [here](/articles/docker_development.html).
 
-Ok, so now that you have docker and vscode installed, let's add some [ros2](https://index.ros.org/doc/ros2/)!
+Ok, so now that you have Docker and VSCode installed, let's add some [ros2](https://index.ros.org/doc/ros2/)!
 
 ## Adding ROS2
 
-You will need to add both the base ROS libraries and the development packages in order to develop in ROS2.  I keep an updated version of ROS2 packages on [dockerhub](https://hub.docker.com/repository/docker/athackst/ros2).  I maintain both a base version and a development version of the docker container.
+You will need to have the ROS libraries as well as the dependant development packages to develop in ROS2.  I keep an updated version of ROS2 packages on [dockerhub](https://hub.docker.com/repository/docker/athackst/ros2).  I maintain both a base version and a development version of the docker container.
 
 Why two?
 
-The base version has the minimal dependencies needed to run ROS2.  You  can use this image for code you want to deploy, but don't want or need the ability to write new code.  The development version is based on the base version, and adds all the dependencies you need to compile and create new packages.
+The base version has the minimal dependencies needed to run ROS2.  You can use this image for code you want to deploy, but don't want or need the ability to write new code.  The development version is based on the base version and adds all the dependencies you need to compile and create new packages.
 
 ### Folder structure
 
 For the following files, I will assume you have the following folder structure.  This structure is very typical for ROS2/vscode development.  
 
-The upper level directory is the folder you open in vscode.  It contains the special folders `.devcontainer` and `.vscode` which vscode uses to load your workspace and preferences.  
+The upper-level directory is the folder you open in VSCode.  It contains the special folders `.devcontainer` and `.vscode` which VSCode uses to load your workspace and preferences.  
 
 ROS2 code is located inside the src directory, organized as packages within folders.
 
@@ -43,49 +43,32 @@ ROS2 code is located inside the src directory, organized as packages within fold
         |-- <ros packages>
 ```
 
+## Set up the docker development container
+
 ### Make the docker file
 
-In order to use the docker container in VSCode, you will need to make a dockerfile and update it to install your own dependencies.
+The first thing you’ll want to do is create a dockerfile for your project. This will let you specify any custom dependencies you have.
 
-For this reason, I decided to share this as a file, instead of posting it as a container on dockerhub.
+example:
 
 ```docker
 # This is the development environment
-FROM athackst/ros2:dashing-dev
+FROM athackst/ros2:foxy-dev
 
 # Uncomment this line and add custom packages and dependencies you want to install here.
-#sudo apt-get update && sudo apt-get install -y \
+# sudo apt-get update && sudo apt-get install -y \
 # put dependent packages here
 # && rm -rf /var/lib/apt/lists/*
 
-# This Dockerfile adds a non-root 'vscode' user with sudo access. However, for Linux,
-# this user's GID/UID must match your local user UID/GID to avoid permission issues
-# with bind mounts. Update USER_UID / USER_GID if yours is not 1000. See
-# https://aka.ms/vscode-remote/containers/non-root-user for details.
-ARG USERNAME=vscode
-ARG USER_UID=1000
-ARG USER_GID=$USER_UID
-
-# Create a non-root user to use if preferred - see https://aka.ms/vscode-remote/containers/non-root-user.
-RUN groupadd --gid $USER_GID $USERNAME \
-    && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
-    # [Optional] Add sudo support for the non-root user
-    && apt-get update \
-    && apt-get install -y sudo \
-    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
-    && chmod 0440 /etc/sudoers.d/$USERNAME \
-    # Cleanup
-    && rm -rf /var/lib/apt/lists/*
-
-# The entrypoint for the container to source the environment
-COPY entrypoint.sh /setup/entrypoint.sh
-ENTRYPOINT [ "/setup/entrypoint.sh" ]
+# Uncomment these lines to set an entry point for the container.
+# COPY entrypoint.sh /setup/entrypoint.sh
+# ENTRYPOINT [ "/setup/entrypoint.sh" ]
 
 ```
 
-### Set up the devcontainer
+### Set up the development container
 
-You'll need a devcontainer file in order for vscode to know how to mount your docker container as a workspace.  I suggest using one like the following:
+You'll need a`.devcontainer` file for VSCode to know how to mount your docker container as a workspace.  I suggest using one like the following:
 
 ```javascript
 // See https://aka.ms/vscode-remote/devcontainer.json for format details.
@@ -98,14 +81,7 @@ You'll need a devcontainer file in order for vscode to know how to mount your do
         // This will allow you to use a ptrace-based debugger like C++, Go, and Rust.
         "--cap-add=SYS_PTRACE",
         "--security-opt", "seccomp=unconfined",
-        // This lets you mount your ssh credentials.  
-        // In order to work with all platforms (including windows)
-        // you have to mount your credentials and then set them
-        // up using the postCreateCommand below
-        "-v", "${env:HOME}${env:USERPROFILE}/.ssh:/root .ssh-localhost:ro"
     ],
-    // This allows all platforms to use the host ssh credentials
-    "postCreateCommand": "sudo cp -r /root/.ssh-localhost ~ &&  sudo chown -R $(id -u):$(id -g) ~/.ssh-localhost && mv ~  .ssh-localhost ~/.ssh && chmod 700 ~/.ssh && chmod 600 ~  .ssh/*",
     // These are the extensions I like to use with ROS2
     "extensions": [
         "ms-azuretools.vscode-docker",
@@ -119,6 +95,8 @@ You'll need a devcontainer file in order for vscode to know how to mount your do
     ]
 }
 ```
+
+Line by line explaination:
 
 #### context
 
@@ -134,7 +112,7 @@ The user name should match a non-root user inside your docker container.  VSCode
 
 #### runArgs
 
-These are the arguments you want to pass in to the `docker run` command.  You can place any argument that is valid to use with [docker run](https://docs.docker.com/engine/reference/commandline/run/)
+These are the arguments you want to pass into the `docker run` command.  You can place any argument that is valid to use with [docker run](https://docs.docker.com/engine/reference/commandline/run/)
 
 The ones I find the most useful are:
 
@@ -145,21 +123,9 @@ The ones I find the most useful are:
     "--security-opt", "seccomp=unconfined",
     ```
 
-* SSH credentials.  This will add [ssh credentials](https://code.visualstudio.com/docs/remote/containers#_using-ssh-keys) to your container without saving them inside the container.  This somewhat lengthy entry is cross-platform compatible, so you can use the same devcontainer on linux and windows.
-
-    ```javascript
-    "-v", "${env:HOME}${env:USERPROFILE}/.ssh:/root .ssh-localhost:ro"
-    ```
-
-    You'll also need to set up the corresponding `postCreateCommand` to give the .ssh credentials the right file permissions within your container
-
-    ```javascript
-    "postCreateCommand": "sudo cp -r /root/.ssh-localhost ~ &&  sudo chown -R $(id -u):$(id -g) ~/.ssh-localhost && mv ~  .ssh-localhost ~/.ssh && chmod 700 ~/.ssh && chmod 600 ~  .ssh/*"
-    ```
-
 #### extensions
 
-Extension are vscode plugins you'd like to have in the container.  By hosting them in the container, you can be sure that specific ones are installed and configured for everyone.
+Extensions are VSCode plugins you'd like to have in the container.  By hosting them in the container, you can be sure that specific ones are installed and configured for everyone.
 
 I like using the following extensions with ROS2.
 
@@ -176,6 +142,123 @@ I like using the following extensions with ROS2.
     ]
 ```
 
-Et voila!
+## Set up CPP properties
 
-You can now open your folder inside a docker container!
+Since we've added the `cpptools` plugin, you will need to configure the include paths so that VSCode can properly do IntelliSense.
+
+This file is located in the .vscode directory in your workspace
+
+c_cpp_properties.json
+
+```json
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/opt/ros/foxy/include"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}
+```
+
+Now that you have the properties set up, you should be able to tab-complete and follow definitions of objects within your code. Yay!
+
+## Set up tasks
+
+Next, set up your tasks so that you can build and test your code.
+
+.vscode/tasks.json
+
+```json
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "colcon build --cmake-args '-DCMAKE_BUILD_TYPE=Debug'"
+        },
+        {
+            "label": "test",
+            "type": "shell",
+            "command": "colcon test && colcon test-result"
+        }
+    ]
+}
+```
+
+## Set up the debugger
+
+Once you can build your code, you may want to run and debug it.  You can do this by adding different configurations to the .vscode/launch.json file
+
+Different debuggers are used for c++ and python
+
+### Python
+
+Since python is a scripting language, it's somewhat easier to set up to debug.
+
+Add the following configuration to .vscode/launch.json
+
+```json
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        }
+```
+
+### C++
+
+C++ requires the docker container to be set up properly for gdb.  The development image and devcontainer.json file have these set up for you already.
+
+Add the following configuration to .vscode/launch.json
+
+```json
+        {
+            "name": "(gdb) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/install/${input:package}/lib/${input:package}/${input:program}",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "inputs": [
+            {
+            "id": "package",
+            "type": "promptString",
+            "description": "Package name"
+            },
+            {
+            "id": "program",
+            "type": "promptString",
+            "description": "Program name"
+            }
+        ]
+
+        }
+```
+
+**Note** The location of the "program" you will need to enter the full path of the program you are debugging.
+
+Et Voila!
