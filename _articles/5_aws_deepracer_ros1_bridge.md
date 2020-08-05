@@ -4,6 +4,8 @@ title: Running the DeepRacer with ROS2
 category: Robotics
 series: DeepRacer
 tags: [deepracer, ros2]
+image: assets/img/IMG_5256.jpg
+summary: Using ROS2 with the DeepRacer means one thing; setting up a working ros bridge.
 ---
 
 ## Interfacing with ROS2

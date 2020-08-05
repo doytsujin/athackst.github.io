@@ -4,6 +4,8 @@ title: Controlling the DeepRacer with a gamepad
 category: Robotics
 series: DeepRacer
 tags: deepracer
+image: /assets/img/deepracer_joy.gif
+summary: How to set up ROS to control the DeepRacer with a gamepad.
 ---
 
 The first thing I wanted to do when I got my DeepRacer was to drive it around.  It comes with a web interface where you can run it in "manual" mode, but I wanted to use a gamepad controller. (By default the web interface is only controllable via mouse.)

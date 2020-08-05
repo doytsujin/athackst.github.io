@@ -4,6 +4,8 @@ title: Running the gamepad onboard the DeepRacer
 category: Robotics
 series: DeepRacer
 tags: deepracer
+image: /assets/img/deepracer_joy.gif
+summary: How to build and install the ROS software to run the DeepRacer with a gamepad or joystick.
 ---
 
 After I hooked up a [gamepad through ROS](/articles/3_aws_deepracer_joy.html) to the DeepRacer, the next step was to get it loaded directly onto the DeepRacer.  Because what good is a remote control for an RC car if you need to set up a laptop to use it?

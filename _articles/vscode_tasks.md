@@ -3,6 +3,8 @@ layout: text_entry
 title: Supercharging VSCode with Tasks
 category: Software Development
 tags: [vscode]
+image: /assets/img/vscode_run_task.gif
+summary: VSCode tasks are a powerful tool.  This is how i use them.
 ---
 
 In my previous articles I showed you how I set up [github pages](/articles/vscode_docker_github_pages.html) and [ros2](/articles/vscode_docker_ros2.html) with vscode.

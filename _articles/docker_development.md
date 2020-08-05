@@ -3,6 +3,8 @@ layout: text_entry
 title: "VSCode and Docker"
 category: Software Development
 tags: [vscode, docker]
+image: /assets/img/IMG_5118.jpg
+summary: Use VSCode and Docker for everything.
 ---
 
 ![vscode](/assets/img/IMG_5118.jpg#left)

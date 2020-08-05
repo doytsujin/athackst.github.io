@@ -3,6 +3,7 @@ layout: text_entry
 title: Setting Up a Local Docker Registry
 category: Software Development
 tags: [docker]
+summary: Don't tar your Docker images! A local docker registry lets you share images across your network.
 ---
 
 After you've been developing your code [using docker](/articles/docker_development.html) there will inevitably come a time when you'd like to share your workspace (code and all!) with someone else or put it on another computer.

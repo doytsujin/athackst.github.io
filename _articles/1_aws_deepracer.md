@@ -4,6 +4,8 @@ title: Unboxing the AWS Deep Racer
 category: Robotics
 series: DeepRacer
 tags: deepracer
+image: /assets/img/IMG_5239.jpg
+summary: How it arrived and a look at the hardware.
 ---
 
 ![aws deep racer](/assets/img/IMG_5239.jpg)

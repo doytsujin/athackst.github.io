@@ -4,6 +4,8 @@ title: Digging into ROS on the DeepRacer
 category: Robotics
 series: DeepRacer
 tags: deepracer
+image: /assets/img/IMG_5257.jpg
+summary: How to view the ROS API on the Deepracer and connect to it from another computer.
 ---
 
 So you have a deep racer and you want to learn more about the software that's on it, read on!
