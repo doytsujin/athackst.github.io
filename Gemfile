@@ -10,3 +10,5 @@ group :jekyll_plugins do
 end
 
 gem 'html-proofer'
+
+gem "kramdown", ">= 2.3.0"
