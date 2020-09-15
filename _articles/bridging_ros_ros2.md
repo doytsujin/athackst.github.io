@@ -1,8 +1,9 @@
 ---
 layout: text_entry
 title: Bridging ROS and ROS2
-category: Robotics
+category: Software Development
 tags: [ros, ros2]
+series: ROS
 summary: Bridging ROS and ROS2 is harder than you would think. Here's how I did it.
 ---
 

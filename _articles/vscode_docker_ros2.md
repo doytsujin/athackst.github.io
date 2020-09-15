@@ -2,11 +2,15 @@
 layout: text_entry
 title: VSCode, Docker, and ROS2
 category: Software Development
+series: ROS
 tags: [vscode, docker, ros2]
 summary: How to set up VSCode to develop with ROS2
 ---
 
 I started out playing with ROS2 by using a docker container.  It was a fast and easy way for me to try out ROS2.  As an avid user of ROS, I naturally wanted to keep up with the new changes being made.  However, it can be difficult to set up, especially for new users.  This guide is intended to be used by people that are familiar with coding and software development, but maybe not ROS.
+
+> **Get the template**
+> [https://github.com/athackst/vscode_ros2_workspace](https://github.com/athackst/vscode_ros2_workspace)
 
 ## What is ROS2
 
