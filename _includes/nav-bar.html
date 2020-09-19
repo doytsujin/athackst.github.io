@@ -1,10 +1,9 @@
 <div class="nav-bar">
     <nav role="navigation">
-        {% for item in site.data.navigation %}
-        <div {% if page.title==item.title %} class="selected" {% endif %} >
-            <a href="{{ item.url }}">
-                {{ item.title }} </a>
+        {%- for item in site.data.navigation %}
+        <div {%- if page.title==item.title %} class="selected" {%- endif %}>
+            <a href="{{ item.url }}">{{ item.title }}</a>
         </div>
-        {% endfor %}
+        {%- endfor %}
     </nav>
 </div>

@@ -1,0 +1,156 @@
+body {
+  margin: auto;
+}
+
+h1 {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 300;
+  font-size: xxx-large;
+  color: #7a7a7a;
+  text-decoration: none;
+  letter-spacing: 0px;
+  line-height: 1.25em;
+  text-transform: uppercase;
+  height: auto;
+}
+
+h2 {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 300;
+  font-size: xx-large;
+  color: #8a8a8a;
+  text-decoration: none;
+  text-transform: lowercase;
+  letter-spacing: 0px;
+  line-height: 1.0em;
+  height: auto;
+}
+
+h3 {
+  font-family: 'Raleway';
+  font-weight: 300;
+  font-size: x-large;
+  color: #7a7a7a;
+  text-decoration: none;
+  letter-spacing: 1px;
+  line-height: 1em;
+  text-transform: none;
+}
+
+h4 {
+  font-family: 'Oswald';
+  font-size: large;
+  color: #333333;
+  text-decoration: none;
+  letter-spacing: 1px;
+  line-height: 1em;
+  text-transform: uppercase;
+}
+
+p {
+  font-family: 'Actor';
+  font-size: medium;
+  color: #797979;
+  line-height: 1.5em;
+  text-transform: none;
+  margin: auto;
+  padding-bottom: 10px;
+}
+
+img {
+  margin: auto;
+  display: block;
+  width: -webkit-fill-available;
+}
+
+img[src*='#left'] {
+  float: left;
+  padding-right: 1vw;
+  max-width: 300px;
+}
+
+img[src*='#right'] {
+  float: right;
+  padding-left: 1vw;
+  max-width: 300px;
+}
+
+img[src*='#center'] {
+  display: block;
+  margin: auto;
+}
+
+a {
+  color: #38761d;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #797979;
+  text-decoration: underline;
+}
+
+ol {
+  font-family: 'Actor';
+  font-size: 16px;
+  color: #797979;
+  line-height: 1.5em;
+  text-transform: none;
+  margin: auto;
+  padding-bottom: 20px;
+}
+
+ul {
+  padding-left: 5vw;
+  font-family: 'Actor';
+  font-size: 16px;
+  color: #797979;
+  line-height: 1.5em;
+}
+
+ul li {
+  margin-left: 30px;
+  padding: 5px;
+}
+
+input {
+  width: 100%;
+  height: 50px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  resize: none;
+}
+
+blockquote {
+  background-color: #ebebeb;
+}
+
+form {
+  margin: 50px 0px;
+}
+
+form textarea {
+  width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  resize: none;
+}
+
+form button {
+  margin: auto;
+  padding: 5px;
+  width: 50%;
+  vertical-align: top;
+  line-height: normal;
+  min-width: 100px;
+  text-align: center;
+  height: 50px;
+  color: #38761d;
+}

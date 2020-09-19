@@ -1,0 +1,38 @@
+/* Header */
+
+.intro {
+  background-color: #333333;
+  text-align: center;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.intro h1 {
+  color: #ffffff;
+}
+
+.intro hr {
+  width: 75%;
+  max-width: 400px;
+  border-top: 1px solid #f8f8f8;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.intro-social {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.social-icon {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.fa-lg {
+  font-size: 3vh;
+  line-height: 3vh;
+  vertical-align: -15%;
+}

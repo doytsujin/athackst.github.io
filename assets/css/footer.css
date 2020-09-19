@@ -1,0 +1,37 @@
+/* Footer */
+
+footer {
+  background-color: black;
+  padding-top: 10pt;
+  padding-bottom: 10pt;
+  padding-left: 10pt;
+  padding-right: 10pt;
+  text-align: center;
+}
+
+footer .footer-text {
+  font-family: 'Lato';
+  font-size: small;
+  color: #9a9a9a;
+  line-height: 1.5em;
+  text-transform: lowercase;
+}
+
+footer .footer-text a {
+  color: #ffffff;
+  text-decoration: none;
+  text-transform: lowercase;
+}
+
+footer .footer-text a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+  text-transform: lowercase;
+}
+
+footer .footer-copyright {
+  color: #585858;
+  font-size: small;
+  text-decoration: none;
+  text-align: right;
+}

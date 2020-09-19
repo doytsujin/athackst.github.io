@@ -5,22 +5,22 @@
 
 <body class="page">
 
-  {% include nav-bar.html %}
+{% include nav-bar.html %}
 
-  {% include header.html %}
+{% include header.html %}
 
   <section class="content">
 
-    {{ content }}
+{{ content }}
 
   </section>
 
-  {% include footer.html %}
+{% include footer.html %}
 
 </body>
 
-{% if jekyll.environment == 'production' %}
+{%- if jekyll.environment == 'production' %}
 {% include analytics.html %}
-{% endif %}
+{%- endif %}
 
 </html>

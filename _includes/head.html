@@ -15,33 +15,32 @@
   <meta name="twitter:creator" content="@{{ site.author }}">
   <meta name="twitter:title" content="{{ page.title }}">
 
-  {% if page.summary %}
+  {%- if page.summary %}
   <meta name="twitter:description" content="{{ page.summary }}">
   {% else %}
   <meta name="twitter:description" content="{{ page.title }}">
-  {% endif %}
-  
-  {% if page.image %}
+  {%- endif %}
+  {%- if page.image %}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="{{ site.url }}{{ page.image }}">
   {% else %}
   <meta name="twitter:card" content="summary">
   <meta name="twitter:image" content="{{ site.url }}{{ site.title_image }}">
-  {% endif %}
+  {%- endif %}
   <!-- end of Twitter cards -->
 
   <!-- LinkedIn cards -->
   <meta name="title" property="og:title" content="{{ page.title }}">
   <meta name="author" content="{{ site.author }}">
-  {% if page.image %}
+  {%- if page.image %}
   <meta name="image" property="og:image" content="{{ site.url }}{{ page.image }}">
   {% else %}
   <meta name="image" property="og:image" content="{{ site.url }}{{ site.title_image }}">
-  {% endif %}
-  {% if page.summary %}
+  {%- endif %}
+  {%- if page.summary %}
   <meta name="description" property="og:description" content="{{ page.summary }}">
   {% else %}
   <meta name="description" property="og:description" content="{{ page.title }}">
-  {% endif %}
+  {%- endif %}
   <!-- end of LinkedIn cards -->
 </head>
