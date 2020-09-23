@@ -1,8 +1,5 @@
 {
-    "grammarly.severity": {
-        "Fragment": 4 // Sets Fragment category to Warning.
-    },
-    "cSpell.words": [
+    "cSpell.ignoreWords": [
         "Docker",
         "Docker’s",
         "actionlib",
@@ -38,6 +35,7 @@
         "endcapture",
         "endunless",
         "entrypoint",
+        "fdir",
         "forloop",
         "frameborder",
         "gamepad",
@@ -97,6 +95,7 @@
         "rsync",
         "sairas",
         "sbin",
+        "sdformat",
         "seccomp",
         "setupvars",
         "shopify",

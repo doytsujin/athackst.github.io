@@ -113,6 +113,43 @@ ul li {
   padding: 5px;
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {
+  font-family: 'Oswald';
+  font-size: large;
+  color: #333333;
+  letter-spacing: 1px;
+  line-height: 1em;
+  text-transform: uppercase; 
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
+tr:hover {background-color: #ddd;}
+
+tr {
+  font-family: 'Actor';
+  font-size: medium;
+  color: #797979;
+  line-height: 1.5em;
+  text-transform: none;
+  margin: auto;
+  padding-bottom: 10px;
+}
+
 input {
   width: 100%;
   height: 50px;
