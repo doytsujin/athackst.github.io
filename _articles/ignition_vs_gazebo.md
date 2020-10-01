@@ -5,10 +5,10 @@ category: Software Development
 series: ROS
 tags: [ignition, gazebo, simulation, ros]
 image: /assets/img/gazebo_shadows.png
-summary: Should you make the switch to ignition?  Find out how it compares to gazebo!
+summary: Should you make the switch to Ignition?  Find out how it compares to Gazebo!
 ---
 
-Since Gazebo 11 will be the [last major version](http://gazebosim.org/blog/gazebo11) I thought I'd test the replacement [ignition](https://ignitionrobotics.org/home).  There's a handy [comparison chart](https://ignitionrobotics.org/docs/citadel/comparison) with feature comparisons between the two programs.  
+Since Gazebo 11 will be the [last major version](http://gazebosim.org/blog/gazebo11) I thought I'd test the replacement [Ignition](https://ignitionrobotics.org/home).  There's a handy [comparison chart](https://ignitionrobotics.org/docs/citadel/comparison) with feature comparisons between the two programs.  
 
 But how does it actually perform?
 
@@ -34,23 +34,23 @@ Let's take a look!
 
 Inertia is an important element in simulation, as it lets the physics simulator calculate the correct dynamics of an object in simulation.
 
-![ignition inertia](/assets/img/inertia_ignition.gif)
+![Ignition inertia](/assets/img/inertia_ignition.gif)
 
 From left to right: cube, solid sphere, hollow sphere, solid cylinder, hollow cylinder.  All shapes have the same mass and are modeled with high friction. The high friction causes the cube to stay in place, while the other shapes are able to roll down the ramp as expected.
 
 Nothing surprising here! Both Ignition and Gazebo calculate the dynamics of inertia correctly.
 
-![inertia_sxs](/assets/img/inertia_sxs.gif)
+![inertia sxs](/assets/img/inertia_sxs.gif)
 
 The only noticeable difference is the rendering.  The Gazebo version looks much darker even though all lighting properties are the same, and the shapes aren't showing any shadowing on the ground plane like they are in Ignition.
 
 Remarkably, removing shadowing from Gazebo renders more similarly to the Ignition version.
 
-![gazebo_shadows](/assets/img/gazebo_shadows.png)
+![Gazebo shadows](/assets/img/gazebo_shadows.png)
 
 ## Friction
 
-Friction is the first place that shows the most significant difference between gazebo and ignition's default physics engines.
+Friction is the first place that shows the most significant difference between Gazebo and Ignition's default physics engines.
 
 There are several different types of friction that you can model.  In the [sdformat](http://sdformat.org) specification, the most common is the coefficient of friction.  The coefficient of friction in version 1.7 of the sdformat is modeled as an ODE parameter with `mu` as the coefficient for the "first friction direction" and `mu2` as the coefficient for the "second friction direction".  There is an additional parameter, `fdir1` that can specify a specific primary friction direction relative to the link, otherwise it is modeled relative to the world.
 
@@ -82,23 +82,23 @@ What's neat is that the cubes 6 and 7 tumble on the transition from the ramp to 
 
 In Gazebo, the `mu` and `mu2` arguments acted on the opposite axis as I expected, with the world `y` frame corresponding to `mu` and the world `x` frame corresponding to `mu2`.  
 
-![ignition friction](/assets/img/friction_ignition.gif)
+![Ignition friction](/assets/img/friction_ignition.gif)
 
 In Ignition, the `mu` and `mu2` arguments act on the axis that I expected, with `x` corresponding to `mu` and `y` corresponding to `mu2`.  However, setting the `fdir1` direction to orientations perpendicular to the ramp direction incorrectly makes the box stay on the ramp.
 
 Delving a little bit deeper into the implementation of the friction pyramid, we see that the x and y axis are indeed flipped.
 
-![friction pyramid gazebo](/assets/img/friction_pyramid_gazebo.png)
+![friction pyramid Gazebo](/assets/img/friction_pyramid_gazebo.png)
 
-![friction pyramid ignition](/assets/img/friction_pyramid_ignition.png)
+![friction pyramid Ignition](/assets/img/friction_pyramid_ignition.png)
 
-You can also clearly see better performance in the ignition simulation of friction, with ignition producing much smoother results.
+You can also clearly see better performance in the Ignition simulation of friction, with Ignition producing much smoother results.
 
-This does, however come at a computational expense.  The realtime factor of gazebo on my computer ranged between [0.3, 0.99], whereas the realtime factor of ignition hovered at around 0.2.
+This does, however come at a computational expense.  The realtime factor of Gazebo on my computer ranged between [0.3, 0.99], whereas the realtime factor of Ignition hovered at around 0.2.
 
 ## Bounce
 
-Bounce is another area with a large difference between the two simulators.  It is not currently modeled in ignition, so if you require bounce ignition is currently a no-go for you.
+Bounce is another area with a large difference between the two simulators.  It is not currently modeled in Ignition, so if you require bounce Ignition is currently a no-go for you.
 
 ![bounce sxs](/assets/img/bounce_sxs.gif)
 
@@ -108,27 +108,27 @@ To model bounce in Gazebo you need to set 3 parameters in the SDF.
 2. `threshold`  The penetration threshold needed to apply restitution force
 3. `max_vel` The maximum velocity that the restitution force can cause.
 
-True infinite bounce is only achieved if the ground _also_ has the `restitution_coefficient` set to 1.  Note you can set the max_vel of the ground to 0 so it doesn't accrue any velocity.
+True infinite bounce is only achieved if the ground _also_ has the `restitution_coefficient` set to 1.  Note you can set the `max_vel` of the ground to 0 so it doesn't accrue any velocity.
 
 ## Joint Dynamics
 
 Both joint damping and joint friction behave similarly in both versions.
 
-Joint damping is modeled as viscous damping in units of N*m*s/rad, or the amount of opposing force to any joint velocity (in this case torque per angular velocity) that is used to "slow" a moving joint towards rest.
+Joint damping is modeled as viscous damping in units of N\*m\*s/rad, or the amount of opposing force to any joint velocity (in this case torque per angular velocity) that is used to "slow" a moving joint towards rest.
 
-Damping in gazebo:
-![joint dynamics gazebo](/assets/img/jointdamping_gazebo.gif)
-Damping in ignition:
-![joint dynamics ignition](/assets/img/jointdamping_ignition.gif)
+Damping in Gazebo:
+![joint dynamics Gazebo](/assets/img/jointdamping_gazebo.gif)
+Damping in Ignition:
+![joint dynamics Ignition](/assets/img/jointdamping_ignition.gif)
 
 From left to right: Green: 0, Turquoise: 1, Blue: 10, Pink: 100, Red: 1000
 
 Joint friction is modeled as kinetic friction with the coefficient of friction that is used to oppose the velocity of a joint to "slow" a moving joint to rest.
 
-Friction in gazebo:
-![joint friction gazebo](/assets/img/jointfriction_gazebo.gif)
-Friction in ignition:
-![joint friction ignition](/assets/img/jointfriction_ignition.gif)
+Friction in Gazebo:
+![joint friction Gazebo](/assets/img/jointfriction_gazebo.gif)
+Friction in Ignition:
+![joint friction Ignition](/assets/img/jointfriction_ignition.gif)
 
 From left to right: Green: 0, Turquoise: 1, Blue: 10, Pink: 100, Red: 1000
 
@@ -137,21 +137,21 @@ I thought it would be good to also model these properties on a wheel, since that
 Wheel motion
 
 Gazebo:
-![wheels in gazebo](/assets/img/joint_gazebo.gif)
+![wheels in Gazebo](/assets/img/joint_gazebo.gif)
 Ignition:
-![wheels in ignition](/assets/img/joint_ignition.gif)
+![wheels in Ignition](/assets/img/joint_ignition.gif)
 
 From front to back: Yellow: none, Turquoise: damping, Pink: friction, Green: spring reference/stiffness.
 
 ## Conclusions
 
-Your use case will likely determine which version you end up going for.  Overall ignition has some nicer friction properties, but is lacking in some (perhaps less often used) areas such as bounce.  
+Your use case will likely determine which version you end up going for.  Overall Ignition has some nicer friction properties, but is lacking in some (perhaps less often used) areas such as bounce.  
 
 If you have simple simulation needs and want to stay on top of the latest versions, Ignition is probably the right call.  Otherwise, you're probably better off staying with Gazebo, at least for now.
 
 ### Summary
 
-| attribute | ignition | gazebo |
+| attribute | Ignition | Gazebo |
 | :-------: | :------: | :----: |
 |  Inertia  |    x     |   x    |
 | Friction  |          |        |
