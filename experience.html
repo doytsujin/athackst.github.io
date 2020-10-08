@@ -19,7 +19,9 @@ title: Experience
         {{ post.content }}
         {% elsif post.layout=='image_entry' %}
         <img src="{{ post.image }}" alt="{{ page.title }}" />
+        {% if post.link %}<a href="{{ post.link}}">{% endif %}
         <h3>{{ post.title }}</h3>
+        {% if post.link %}</a>{% endif %}
         {{ post.content }}
         {% elsif post.layout=='text_entry' %}
         <h3>{{ post.title }}</h3>
