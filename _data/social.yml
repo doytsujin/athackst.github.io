@@ -1,9 +1,9 @@
 - title: mail
   icon: envelope
-  url: mailto:allison+website@lyonthackston.com
+  url: /contact.html
 - title: linkedin
   icon: linkedin
-  url: https://www.linkedin.com/in/allisonlyonthackston
+  url: https://www.linkedin.com/in/allisonthackston
 - title: github
   icon: github
   url: https://github.com/athackst
