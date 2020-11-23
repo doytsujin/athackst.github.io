@@ -11,7 +11,10 @@
 	"appPort": [
 		4000
 	],
-	"forwardPorts": [80, 443],
+	"forwardPorts": [
+		80,
+		443
+	],
 	"postCreateCommand": "bundle install",
 	// Add the IDs of extensions you want installed when the container is created in the array below.
 	"extensions": [
@@ -29,7 +32,7 @@
 		"ecmel.vscode-html-css",
 		"aeschli.vscode-css-formatter",
 		// editing
-		"streetsidesoftware.code-spell-checker",
+		"znck.grammarly",
 		"ms-vscode.wordcount"
 	]
 }

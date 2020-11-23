@@ -1,7 +1,7 @@
 ---
 layout: text_entry
 title: Bridging ROS and ROS2
-category: Software Development
+category: Robotics
 tags: [ros, ros2]
 series: ROS
 summary: Bridging ROS and ROS2 is harder than you would think. Here's how I did it.
@@ -244,7 +244,7 @@ The final thing you need to do is set up your mapping_rules file.  You only need
 
 For every service or message in which a variable name was changed, you'll need to tell the `ros1_bridge` how to link the new name to the old name.
 
-These are stored in a yaml file, in the form of a vector of objects, with each item corresponding to a single complete message.
+These are stored in a YAML file, in the form of a vector of objects, with each item corresponding to a single complete message.
 
 Services and Messages have different key field names.
 
@@ -275,7 +275,7 @@ Example service mapping:
 
 ## Build the bridge
 
-As I mentioned previously, using docker for the bridge is advantageous for being able to fully specify the build and run environments for the `ros1_bridge`.  I'll be walking through the creation of a [multi-stage dockerfile](https://docs.docker.com/develop/develop-images/multistage-build/) that will handle building all of the environments and finally creating a run time image from it.
+As I mentioned previously, using docker for the bridge is advantageous for being able to fully specify the build and run environments for the `ros1_bridge`.  I'll be walking through the creation of a [multi-stage dockerfile](https://docs.docker.com/develop/develop-images/multistage-build/) that will handle building all of the environments and finally creating a run-time image from it.
 
 Let's start setting up our ros1_bridge docker image!
 
@@ -302,7 +302,7 @@ I'm using my development melodic image, which includes just the basic ros packag
 
 > Note: I chose melodic so that the base operating system would match my desired destination ros2 version of eloquent.
 
-I've chosen to install my packages in to the `/opt/ros/melodic` directory.  This makes it easier to copy and source in the resulting `ros1_bridge` image.  If you choose to put the ros install directory somewhere else, you'll need to add additional environment variables for that workspace in the `ros1_bridge` image.
+I've chosen to install my packages in the `/opt/ros/melodic` directory.  This makes it easier to copy and source in the resulting `ros1_bridge` image.  If you choose to put the ros install directory somewhere else, you'll need to add additional environment variables for that workspace in the `ros1_bridge` image.
 
 ### Build the ROS2 messages
 
@@ -392,7 +392,7 @@ RUN mkdir -p src && cd src \
 
 ### Run the ros1_bridge
 
-Next, create the final run time image.
+Next, create the final run-time image.
 
 ```docker
 FROM athackst/ros2:eloquent-base

@@ -1,7 +1,7 @@
 ---
 layout: text_entry
 title: VSCode, Docker, and ROS2
-category: Software Development
+category: Robotics
 series: ROS
 tags: [vscode, docker, ros2]
 summary: How to set up VSCode to develop with ROS2

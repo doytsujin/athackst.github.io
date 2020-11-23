@@ -1,8 +1,8 @@
 ---
 layout: text_entry
 title: Ignition vs Gazebo
-category: Software Development
-series: ROS
+category: Robotics
+series: Simulation
 tags: [ignition, gazebo, simulation, ros]
 image: /assets/img/gazebo_shadows.png
 summary: Should you make the switch to Ignition?  Find out how it compares to Gazebo!
